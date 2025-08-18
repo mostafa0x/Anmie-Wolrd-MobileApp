@@ -2,8 +2,6 @@ import Categorys from "@/components/Categorys";
 import SerachIcon from "@/components/Icons/SerachIcon";
 import Slider from "@/components/Slider";
 import { Colors } from "@/constants/Colors";
-import { axiosClient } from "@/lib/api/axiosClient";
-import { setUpcomingAnime } from "@/lib/store/AppSlice";
 import { StateType } from "@/types/store/StateType";
 import { rh, rw } from "@/utils/dimensions";
 import { Image } from "expo-image";
@@ -17,17 +15,17 @@ export default function HomeScreen() {
   const [isLoadingUpcoming, setIsLoadingUpcoming] = useState(true);
 
   useEffect(() => {
-    const CallApi = async () => {
-      try {
-        const res = await axiosClient.get("/top/anime?filter=upcoming&limit=5");
-        dispatch(setUpcomingAnime(res.data.data));
-        setIsLoadingUpcoming(false);
-      } catch (err: any) {
-        console.log(err);
-        setIsLoadingUpcoming(true);
-      }
-    };
-    CallApi();
+    // const CallApi = async () => {
+    //   try {
+    //     const res = await axiosClient.get("/top/anime?filter=upcoming&limit=5");
+    //     dispatch(setUpcomingAnime(res.data.data));
+    //     setIsLoadingUpcoming(false);
+    //   } catch (err: any) {
+    //     console.log(err);
+    //     setIsLoadingUpcoming(true);
+    //   }
+    // };
+    // CallApi();
   }, []);
 
   return (
@@ -52,13 +50,11 @@ export default function HomeScreen() {
       {/*slider */}
       <Slider />
       {/* Lists */}
-      <Categorys title="upcoming" isLoading={isLoadingUpcoming} />
-      <Categorys title="upcoming" isLoading={isLoadingUpcoming} />
 
-      <Categorys title="upcoming" isLoading={isLoadingUpcoming} />
-
-      <Categorys title="ongoing" isLoading={isLoadingUpcoming} />
-      <Categorys title="complete" isLoading={isLoadingUpcoming} />
+      <Categorys title="upcoming" filter="upcoming" />
+      <Categorys title="Popularity" filter="bypopularity" />
+      <Categorys title="ongoing" filter="airing" />
+      <Categorys title="favorite" filter="favorite" />
     </ScrollView>
   );
 }

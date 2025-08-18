@@ -1,20 +1,17 @@
 import ArrowLeftIcon from "@/components/Icons/ArrowLeftIcon";
 import ListAnmie from "@/components/List/index";
 import { Colors, Fonts } from "@/constants/Colors";
-import { useAnmieByCategory } from "@/hooks/GetUpComingAnmie";
-import { StateType } from "@/types/store/StateType";
+import { useAnmieByCategory } from "@/hooks/GetAnmies";
 import { rf, rh, rw } from "@/utils/dimensions";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useRef } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { useSelector } from "react-redux";
 
 export default function CategoryInfo() {
   const router = useRouter();
   const { type } = useLocalSearchParams();
   const fristTwoTitle = useRef(type.slice(0, 2));
   const afterTwoTitle = useRef(type.slice(2));
-  const { upcomingAnime } = useSelector((state: StateType) => state.AppReducer);
   const {
     data,
     hasNextPage,
@@ -24,6 +21,7 @@ export default function CategoryInfo() {
     error,
     isError,
   } = useAnmieByCategory("/anime", "upcoming");
+
   const isLoadingPage = isLoading && isFetching;
 
   return (

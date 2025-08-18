@@ -1,4 +1,5 @@
 import { Colors, Fonts } from "@/constants/Colors";
+import { useTopAnmie } from "@/hooks/useTopAnmie";
 import { StateType } from "@/types/store/StateType";
 import { rf, rh, rw } from "@/utils/dimensions";
 import { useRouter } from "expo-router";
@@ -10,10 +11,10 @@ import ListAnmie from "../List";
 
 interface props {
   title: string;
-  isLoading: boolean;
+  filter: string;
 }
 
-export default function Categorys({ title, isLoading }: props) {
+export default function Categorys({ title, filter }: props) {
   const { topUpcomingAnime, topOngoinggAnime } = useSelector(
     (state: StateType) => state.AppReducer
   );
@@ -21,6 +22,8 @@ export default function Categorys({ title, isLoading }: props) {
   const fristTwoTitle = useRef(title.slice(0, 2));
   const afterTwoTitle = useRef(title.slice(2));
   const router = useRouter();
+  const { data, isLoading, isError, error } = useTopAnmie("/top/anime", filter);
+
   return (
     <View style={styles.Categorys}>
       <View style={styles.CategorysItem}>
@@ -36,7 +39,11 @@ export default function Categorys({ title, isLoading }: props) {
           />
         </TouchableOpacity>
       </View>
-      <ListAnmie data={currData} isLoading={isLoading} from="Home" />
+      <ListAnmie
+        data={data?.data ?? [1, 2, 3, 4]}
+        isLoading={isLoading}
+        from="Home"
+      />
     </View>
   );
 }

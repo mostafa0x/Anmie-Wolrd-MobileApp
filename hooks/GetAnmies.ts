@@ -3,10 +3,14 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 
 async function featchData(pageParam: number, url: string, filter: string) {
   const limitPerPage = 12;
-  const res = await axiosClient.get(
-    `${url}?page=${pageParam}&limit=${limitPerPage}&status=${filter}`
-  );
-  return res.data;
+  try {
+    const res = await axiosClient.get(
+      `${url}?page=${pageParam}&limit=${limitPerPage}&status=${filter}`
+    );
+    return res.data;
+  } catch (err: any) {
+    throw err;
+  }
 }
 export function useAnmieByCategory(url: string, filter: string) {
   return useInfiniteQuery({

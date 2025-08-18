@@ -71,7 +71,7 @@ function ListAnmie({
             fetchNextPage();
           }
         }}
-        onEndReachedThreshold={0.5}
+        onEndReachedThreshold={0.8}
         renderItem={({ item }) => (
           <ListItem item={item} isLoading={isLoading} from={from} />
         )}
