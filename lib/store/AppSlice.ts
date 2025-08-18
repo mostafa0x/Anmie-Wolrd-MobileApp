@@ -258,7 +258,6 @@ const AppSlice = createSlice({
       state.upcomingAnime = action.payload;
     },
     setIsScrolling: (state, action) => {
-      console.log(action.payload);
       state.isScrolling = action.payload;
     },
   },

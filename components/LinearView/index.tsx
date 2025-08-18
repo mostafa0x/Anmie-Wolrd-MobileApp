@@ -5,7 +5,7 @@ import { StyleSheet } from "react-native";
 export default function LinearView({ children }: any) {
   return (
     <LinearGradient
-      colors={["#524d4d", "#242121"]}
+      colors={["#363333", "#38393E"]}
       locations={[0, 1]}
       start={{ x: 0, y: 0 }}
       end={{ x: 0, y: 1 }}
