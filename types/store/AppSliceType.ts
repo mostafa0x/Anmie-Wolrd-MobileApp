@@ -1,6 +1,6 @@
 export interface AppSliceType {
-  upcomingAnime: AnmieType[];
-  ongoinggAnime: AnmieType[];
+  topUpcomingAnime: AnmieType[];
+  topOngoinggAnime: AnmieType[];
   isScrolling: boolean;
 }
 

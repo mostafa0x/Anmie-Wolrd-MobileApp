@@ -1,5 +1,6 @@
 import LinearView from "@/components/LinearView";
 import { store } from "@/lib/store";
+import AllProviders from "@/Providers/Providers";
 import { useFonts } from "expo-font";
 import { Slot } from "expo-router";
 import { StatusBar } from "expo-status-bar";
@@ -21,14 +22,16 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Provider store={store}>
-        <LinearView>
-          <SafeAreaProvider>
-            <SafeAreaView>
-              <Slot />
-              <StatusBar style="dark" />
-            </SafeAreaView>
-          </SafeAreaProvider>
-        </LinearView>
+        <AllProviders>
+          <LinearView>
+            <SafeAreaProvider>
+              <SafeAreaView>
+                <Slot />
+                <StatusBar style="dark" />
+              </SafeAreaView>
+            </SafeAreaProvider>
+          </LinearView>
+        </AllProviders>
       </Provider>
     </GestureHandlerRootView>
   );

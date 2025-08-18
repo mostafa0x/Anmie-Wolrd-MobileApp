@@ -2,7 +2,7 @@ import { AppSliceType } from "@/types/store/AppSliceType";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: AppSliceType = {
-  upcomingAnime: [
+  topUpcomingAnime: [
     {
       aired: {
         from: "2025-10-01T00:00:00+00:00",
@@ -247,7 +247,7 @@ const initialState: AppSliceType = {
       year: 2025,
     },
   ],
-  ongoinggAnime: [],
+  topOngoinggAnime: [],
   isScrolling: true,
 };
 const AppSlice = createSlice({
@@ -255,7 +255,7 @@ const AppSlice = createSlice({
   initialState,
   reducers: {
     setUpcomingAnime: (state, action) => {
-      state.upcomingAnime = action.payload;
+      state.topUpcomingAnime = action.payload;
     },
     setIsScrolling: (state, action) => {
       state.isScrolling = action.payload;

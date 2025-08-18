@@ -57,8 +57,8 @@ export default function HomeScreen() {
 
       <Categorys title="upcoming" isLoading={isLoadingUpcoming} />
 
-      {/* <Categorys title="ongoing" isLoading={isLoadingUpcoming} />
-      <Categorys title="complete" isLoading={isLoadingUpcoming} /> */}
+      <Categorys title="ongoing" isLoading={isLoadingUpcoming} />
+      <Categorys title="complete" isLoading={isLoadingUpcoming} />
     </ScrollView>
   );
 }

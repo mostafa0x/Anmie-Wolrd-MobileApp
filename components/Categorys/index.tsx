@@ -14,10 +14,10 @@ interface props {
 }
 
 export default function Categorys({ title, isLoading }: props) {
-  const { upcomingAnime, ongoinggAnime } = useSelector(
+  const { topUpcomingAnime, topOngoinggAnime } = useSelector(
     (state: StateType) => state.AppReducer
   );
-  const currData = title == "upcoming" ? upcomingAnime : ongoinggAnime;
+  const currData = title == "upcoming" ? topOngoinggAnime : topUpcomingAnime;
   const fristTwoTitle = useRef(title.slice(0, 2));
   const afterTwoTitle = useRef(title.slice(2));
   const router = useRouter();
@@ -44,7 +44,6 @@ export default function Categorys({ title, isLoading }: props) {
 const styles = StyleSheet.create({
   Categorys: {
     marginTop: rh(32),
-    height: "auto",
   },
 
   CategorysItem: {

@@ -2,8 +2,9 @@ import { Colors, Fonts } from "@/constants/Colors";
 import { AnmieType } from "@/types/store/AppSliceType";
 import { rf, rh, rw } from "@/utils/dimensions";
 import { FlashList } from "@shopify/flash-list";
-import React, { memo } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import ListItem from "./item/index";
 
@@ -12,34 +13,45 @@ function ListAnmie({
   data,
   isLoading,
   from,
+  hasNextPage,
+  fetchNextPage,
 }: {
   data: AnmieType[];
   isLoading: boolean;
   from: fromType;
+  hasNextPage?: boolean;
+  fetchNextPage?: any;
 }) {
-  const styles = stylesF(from);
+  const styles = getStyles(from);
   const dispatch = useDispatch();
+  const isHome = from == "Home";
+  const [CallingApi, setCallingApi] = useState(false);
+
+  useEffect(() => {
+    console.log(CallingApi);
+
+    return () => {};
+  }, [CallingApi]);
+
   return (
     <View style={styles.list}>
       <FlashList
         data={data}
         estimatedItemSize={203}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => (
-          <ListItem item={item} isLoading={isLoading} from={from} />
-        )}
-        horizontal={from === "Home"} // لو Home → Scroll أفقي
-        numColumns={from === "Category" ? 3 : 1} // لو Category → شبكة 3 أعمدة
+        horizontal={isHome}
+        numColumns={isHome ? 1 : 3}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{
-          paddingLeft: rw(19),
-          paddingRight: rw(30),
+          paddingLeft: isHome ? rw(19) : rw(13),
+          paddingRight: isHome ? rw(30) : rw(0),
+          paddingBottom: isHome ? rh(10) : rh(500),
         }}
         ItemSeparatorComponent={() =>
-          from === "Home" ? (
-            <View style={{ width: rw(19) }} />
+          !isHome ? (
+            <View style={{ height: rh(32) }} />
           ) : (
-            <View style={{ height: rh(19) }} />
+            <View style={{ width: rw(19) }} />
           )
         }
         ListEmptyComponent={() => (
@@ -47,16 +59,32 @@ function ListAnmie({
             <Text style={styles.txtEmpty}>Empty List</Text>
           </View>
         )}
+        ListFooterComponent={() =>
+          !isHome && (
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator size={rf(50)} color={Colors.iconColor} />
+            </View>
+          )
+        }
+        onEndReached={() => {
+          if (hasNextPage && !isHome) {
+            fetchNextPage();
+          }
+        }}
+        onEndReachedThreshold={0.5}
+        renderItem={({ item }) => (
+          <ListItem item={item} isLoading={isLoading} from={from} />
+        )}
       />
     </View>
   );
 }
 
-function stylesF(from: fromType) {
+function getStyles(from: fromType) {
   return StyleSheet.create({
     list: {
       height: from === "Home" ? "auto" : "100%",
-      width: "100%",
+      width: "auto",
       marginTop: rh(9),
     },
     txtEmpty: {
@@ -65,6 +93,11 @@ function stylesF(from: fromType) {
       fontSize: rf(20),
     },
     emptyContainer: {
+      marginTop: rh(20),
+    },
+    loadingContainer: {
+      alignItems: "center",
+      justifyContent: "center",
       marginTop: rh(20),
     },
   });
