@@ -1,98 +1,65 @@
-import ArrowRightIcon from "@/components/Icons/ArrowRightIcon";
+import Categorys from "@/components/Categorys";
 import SerachIcon from "@/components/Icons/SerachIcon";
-import ListItem from "@/components/List/item";
-import { Colors, Fonts } from "@/constants/Colors";
-import { rf, rh, rw } from "@/utils/dimensions";
+import Slider from "@/components/Slider";
+import { axiosClient } from "@/lib/api/axiosClient";
+import { setUpcomingAnime } from "@/lib/store/AppSlice";
+import { StateType } from "@/types/store/StateType";
+import { rh, rw } from "@/utils/dimensions";
 import { Image } from "expo-image";
-import { LinearGradient } from "expo-linear-gradient";
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useEffect } from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function HomeScreen() {
+  const dispatch = useDispatch();
+  const { isScrolling } = useSelector((state: StateType) => state.AppReducer);
+
+  useEffect(() => {
+    const CallApi = async () => {
+      try {
+        const res = await axiosClient.get("/top/anime?filter=upcoming&limit=5");
+        dispatch(setUpcomingAnime(res.data.data));
+      } catch (err: any) {
+        console.log(err);
+      }
+    };
+    CallApi();
+  }, []);
+
   return (
-    <LinearGradient
-      colors={["#FB0909", "#570101"]}
-      locations={[0, 1]}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 0, y: 1 }}
-      style={styles.container}
+    <ScrollView
+      contentContainerStyle={{ flexGrow: 1, paddingBottom: rh(100) }}
+      showsVerticalScrollIndicator={false}
+      scrollEnabled={isScrolling}
     >
-      {/*Hader */}
+      {/*appBar */}
       <View style={styles.appBar}>
-        <View>
-          <Image
-            contentFit="contain"
-            style={styles.title}
-            source={require("@/assets/images/title.png")}
-          />
-        </View>
+        <Image
+          contentFit="contain"
+          style={styles.title}
+          source={require("@/assets/images/title.png")}
+        />
         <SerachIcon width={rw(35)} height={rh(35)} />
       </View>
-      {/*silder */}
-      <View style={styles.silderContainer}>
-        <Image
-          style={styles.sliderImg}
-          source={require("@/assets/images/test.png")}
-        />
-      </View>
-      {/*upcoming List */}
-      <View style={styles.Categorys}>
-        <View style={styles.CategorysItem}>
-          <Text style={styles.mainText}>upcoming</Text>
-          <ArrowRightIcon width={rw(18)} height={rh(18)} />
-        </View>
-        {/* <FlashList
-          data={[1, 2, 3]}
-          estimatedItemSize={100}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => <ListItem />}
-        /> */}
-        <View style={{ flexDirection: "row", gap: rw(15) }}>
-          <ListItem />
-          <ListItem />
-          <ListItem />
-        </View>
-      </View>
-    </LinearGradient>
+      {/*slider */}
+      <Slider />
+      {/* Lists */}
+      <Categorys title="upcoming" />
+      <Categorys title="ongoing" />
+      <Categorys title="complete" />
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    zIndex: 1,
-    paddingHorizontal: rw(19),
-  },
   appBar: {
     justifyContent: "space-between",
     flexDirection: "row",
     alignItems: "center",
+    paddingHorizontal: rw(19),
   },
   title: {
     width: rw(217),
     height: rh(70),
-  },
-  silderContainer: {
-    width: rw(352),
-    height: rh(221),
-    marginTop: rh(19),
-  },
-  sliderImg: {
-    width: "100%",
-    height: "100%",
-    borderRadius: rw(20),
-  },
-  Categorys: {
-    marginTop: rh(32),
-  },
-  CategorysItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  mainText: {
-    fontFamily: Fonts.RoadRageRegular,
-    fontSize: rf(48),
-    color: Colors.textColor,
   },
 });

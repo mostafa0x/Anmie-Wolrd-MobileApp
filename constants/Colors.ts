@@ -5,4 +5,5 @@ export const Fonts = {
 export const Colors = {
   splashBg: "#F92B2B",
   textColor: "#fff",
+  iconColor: "#3B65F0",
 };
