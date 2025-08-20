@@ -1,11 +1,9 @@
 import { Colors, Fonts } from "@/constants/Colors";
 import { useTopAnmie } from "@/hooks/useTopAnmie";
-import { StateType } from "@/types/store/StateType";
 import { rf, rh, rw } from "@/utils/dimensions";
 import { useRouter } from "expo-router";
 import React, { useRef } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { useSelector } from "react-redux";
 import ArrowRightIcon from "../Icons/ArrowRightIcon";
 import ListAnmie from "../List";
 
@@ -15,13 +13,10 @@ interface props {
 }
 
 export default function Categorys({ title, filter }: props) {
-  const { topUpcomingAnime, topOngoinggAnime } = useSelector(
-    (state: StateType) => state.AppReducer
-  );
-  const currData = title == "upcoming" ? topOngoinggAnime : topUpcomingAnime;
   const fristTwoTitle = useRef(title.slice(0, 2));
   const afterTwoTitle = useRef(title.slice(2));
   const router = useRouter();
+
   const { data, isLoading, isError, error } = useTopAnmie("/top/anime", filter);
 
   return (
@@ -52,7 +47,6 @@ const styles = StyleSheet.create({
   Categorys: {
     marginTop: rh(32),
   },
-
   CategorysItem: {
     flexDirection: "row",
     alignItems: "center",

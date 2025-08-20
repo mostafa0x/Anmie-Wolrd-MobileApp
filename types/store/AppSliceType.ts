@@ -1,3 +1,5 @@
+import { statusAnime } from "../statusAnmie";
+
 export interface AppSliceType {
   topUpcomingAnime: AnmieType[];
   topOngoinggAnime: AnmieType[];
@@ -59,7 +61,7 @@ export interface AnmieType {
   type: string;
   source: string;
   episodes: null | number;
-  status: string;
+  status: statusAnime;
   airing: boolean;
   aired: {
     from: string | null;

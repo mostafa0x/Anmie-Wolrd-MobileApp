@@ -1,9 +1,9 @@
+import GlassView from "@/components/GlassView";
 import LoveIcon from "@/components/Icons/LoveIcon";
 import StarIcon from "@/components/Icons/StarIcon";
 import { Colors, Fonts } from "@/constants/Colors";
 import { AnmieType } from "@/types/store/AppSliceType";
 import { rf, rh, rw } from "@/utils/dimensions";
-import { BlurView } from "expo-blur";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import { Skeleton } from "moti/skeleton";
@@ -34,8 +34,17 @@ function ListItem({
   }, []);
 
   return (
-    <TouchableOpacity onPress={() => router.push(`/AnmieInfo/${item.mal_id}`)}>
-      <BlurView intensity={10} tint="extraLight" style={styles.glass}>
+    <TouchableOpacity
+      onPress={() =>
+        router.push({
+          pathname: `/AnmieInfo/${item.mal_id}`,
+          params: {
+            anmie: JSON.stringify(item),
+          },
+        })
+      }
+    >
+      <GlassView calledFrom={from}>
         {isLoading ? (
           <Skeleton
             width={styles.img.width}
@@ -72,23 +81,13 @@ function ListItem({
             </View>
           </View>
         )}
-      </BlurView>
+      </GlassView>
     </TouchableOpacity>
   );
 }
 
 function getStyles(from: fromType, isHome: boolean) {
   return StyleSheet.create({
-    glass: {
-      width: isHome ? rw(133) : rw(114),
-      height: rh(203),
-      backgroundColor: "rgba(199, 193, 193, 0.2)",
-      borderRadius: rw(20),
-      overflow: "hidden",
-      borderWidth: 0.3,
-      borderColor: "rgba(255,255,255,0.7)",
-      borderBottomWidth: rw(2),
-    },
     img: {
       width: isHome ? rw(132) : rw(113),
       height: rh(134),

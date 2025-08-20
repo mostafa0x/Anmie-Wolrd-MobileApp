@@ -8,7 +8,7 @@ import { ActivityIndicator } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import ListItem from "./item/index";
 
-export type fromType = "Home" | "Category";
+export type fromType = "Home" | "Category" | "any";
 function ListAnmie({
   data,
   isLoading,
