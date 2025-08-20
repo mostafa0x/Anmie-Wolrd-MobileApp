@@ -22,9 +22,9 @@ function ListAnmie({
   hasNextPage?: boolean;
   fetchNextPage?: any;
 }) {
-  const styles = getStyles(from);
   const dispatch = useDispatch();
   const isHome = from == "Home";
+  const styles = getStyles(isHome);
   const [CallingApi, setCallingApi] = useState(false);
 
   useEffect(() => {
@@ -80,10 +80,10 @@ function ListAnmie({
   );
 }
 
-function getStyles(from: fromType) {
+function getStyles(isHome: boolean) {
   return StyleSheet.create({
     list: {
-      height: from === "Home" ? "auto" : "100%",
+      height: isHome ? "auto" : "100%",
       width: "auto",
       marginTop: rh(9),
     },

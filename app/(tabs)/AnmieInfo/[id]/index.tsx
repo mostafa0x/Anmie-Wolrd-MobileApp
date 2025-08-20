@@ -1,41 +1,54 @@
-import Contant_Info from "@/components/ContantInfo";
 import GlassView from "@/components/GlassView";
 import ArrowLeftIcon from "@/components/Icons/ArrowLeftIcon";
+import NotFoundAnmie from "@/components/NotFoundAnmie";
+import VideoPlayer from "@/components/VideoPlayer";
 import { Colors, Fonts } from "@/constants/Colors";
 import { AnmieType } from "@/types/store/AppSliceType";
 import { rf, rh, rw } from "@/utils/dimensions";
 import { Image } from "expo-image";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import React, { useEffect } from "react";
+import { ScrollView } from "moti";
+import React, { useEffect, useRef } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { YoutubeIframeRef } from "react-native-youtube-iframe";
+
 interface props {
   anmie: AnmieType;
 }
 
 export default function AnmieInfo({}: props) {
   const { anmie } = useLocalSearchParams();
-  const item: AnmieType = JSON.parse(Array.isArray(anmie) ? anmie[0] : anmie);
-  const title = (item.title_english ?? "").split(" ");
+  const item: AnmieType | null = anmie
+    ? JSON.parse(Array.isArray(anmie) ? anmie[0] : anmie)
+    : null;
+  const title = (item?.title_english ?? "").split(" ");
   const firstTitle = title[0] ?? "";
   const restTitle = title.slice(1).join(" ");
   const router = useRouter();
-
+  const playerRef = useRef<YoutubeIframeRef>(null);
   useEffect(() => {
-    console.log(item);
+    console.log(anmie);
 
     return () => {};
-  }, [anmie]);
+  }, []);
 
-  return (
-    <View>
+  return anmie ? (
+    <ScrollView contentContainerStyle={{ paddingBottom: rh(100) }}>
       <View style={styles.appBar}>
         <TouchableOpacity onPress={() => router.back()}>
           <ArrowLeftIcon />
         </TouchableOpacity>
-        <View style={{ flexDirection: "row", marginBottom: rh(20) }}>
-          <Text style={styles.title}>{firstTitle} </Text>
-          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.sectitle}>
-            {restTitle}
+
+        <View style={styles.titleContiner}>
+          <Text
+            numberOfLines={1}
+            adjustsFontSizeToFit
+            minimumFontScale={0.5}
+            ellipsizeMode="tail"
+            style={styles.title}
+          >
+            <Text style={styles.title}>{firstTitle} </Text>
+            <Text style={styles.sectitle}>{restTitle}</Text>
           </Text>
         </View>
       </View>
@@ -44,17 +57,26 @@ export default function AnmieInfo({}: props) {
           <View style={styles.imgContanier}>
             <Image
               style={styles.img}
-              source={{ uri: item.images.webp.large_image_url }}
+              contentFit="cover"
+              source={{ uri: item?.images?.webp?.image_url ?? "" }}
             />
           </View>
           <View style={styles.glassContiner}>
             <GlassView calledFrom="any">
-              <Contant_Info item={item} />
+              {/* <Contant_Info item={item ?? null} /> */}
             </GlassView>
+          </View>
+          <View style={styles.descContiner}>
+            <Text style={styles.decTxt}>{item?.synopsis ?? ""}</Text>
+          </View>
+          <View style={styles.playerContinaer}>
+            <VideoPlayer ref={playerRef} item={item} />
           </View>
         </View>
       </View>
-    </View>
+    </ScrollView>
+  ) : (
+    <NotFoundAnmie />
   );
 }
 
@@ -64,6 +86,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: rw(20),
     gap: rw(24),
+    marginTop: rh(10),
   },
   title: {
     fontFamily: Fonts.RoadRageRegular,
@@ -74,7 +97,6 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.RoadRageRegular,
     fontSize: rf(48),
     color: Colors.secTextColor,
-    width: rw(220),
   },
   imgContanier: {
     width: rw(352),
@@ -95,4 +117,17 @@ const styles = StyleSheet.create({
     marginTop: rh(187),
     zIndex: -1,
   },
+  descContiner: {
+    marginTop: rh(19),
+  },
+  decTxt: {
+    fontFamily: Fonts.RoadRageRegular,
+    fontSize: rf(20),
+    color: Colors.textColor,
+  },
+  playerContinaer: {
+    marginTop: rh(25),
+    borderRadius: rw(20),
+  },
+  titleContiner: { flexDirection: "row", marginBottom: rh(0), flexShrink: 1 },
 });

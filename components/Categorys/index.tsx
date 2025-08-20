@@ -35,7 +35,7 @@ export default function Categorys({ title, filter }: props) {
         </TouchableOpacity>
       </View>
       <ListAnmie
-        data={data?.data ?? [1, 2, 3, 4]}
+        data={data?.data ?? Array(5)}
         isLoading={isLoading}
         from="Home"
       />

@@ -36,6 +36,7 @@ function ListItem({
   return (
     <TouchableOpacity
       onPress={() =>
+        // !isLoading &&
         router.push({
           pathname: `/AnmieInfo/${item.mal_id}`,
           params: {
@@ -72,11 +73,11 @@ function ListItem({
         {isLoading ? null : (
           <View style={styles.info}>
             <View style={styles.infoMin}>
-              <Text style={styles.infoTxt}>{item.favorites}</Text>
+              <Text style={styles.infoTxt}>{item?.favorites ?? "unknow"}</Text>
               <LoveIcon width={rw(16)} height={rh(16)} />
             </View>
             <View style={styles.infoMin}>
-              <Text style={styles.infoTxt}>{item.score || "unkonw"}</Text>
+              <Text style={styles.infoTxt}>{item?.score || "unknow"}</Text>
               <StarIcon width={rw(20)} height={rh(20)} />
             </View>
           </View>

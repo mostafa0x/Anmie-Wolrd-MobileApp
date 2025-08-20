@@ -10,8 +10,9 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 export default function CategoryInfo() {
   const router = useRouter();
   const { type } = useLocalSearchParams();
-  const fristTwoTitle = useRef(type.slice(0, 2));
-  const afterTwoTitle = useRef(type.slice(2));
+  const Category = type ? (Array.isArray(type) ? type[0] : type) : null;
+  const fristTwoTitle = useRef(Category?.slice(0, 2) ?? "");
+  const afterTwoTitle = useRef(Category?.slice(2) ?? "");
   const {
     data,
     hasNextPage,
@@ -30,23 +31,20 @@ export default function CategoryInfo() {
         <TouchableOpacity onPress={() => router.back()}>
           <ArrowLeftIcon />
         </TouchableOpacity>
-        <View style={{ flexDirection: "row", marginBottom: rh(20) }}>
+        <View style={styles.titleContianer}>
           <Text style={styles.title}>{fristTwoTitle.current}</Text>
           <Text style={styles.sectitle}>{afterTwoTitle.current}</Text>
         </View>
       </View>
       <View style={{}}>
         <ListAnmie
-          data={
-            data?.pages?.flatMap((page) => page.data ?? []) ?? [1, 2, 3, 4, 5]
-          }
+          data={data?.pages?.flatMap((page) => page.data ?? []) ?? Array(9)}
           isLoading={isLoadingPage}
           from={"Category"}
           hasNextPage={hasNextPage}
           fetchNextPage={fetchNextPage}
         />
       </View>
-      <Text>index {type}</Text>
     </View>
   );
 }
@@ -68,5 +66,9 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.RoadRageRegular,
     fontSize: rf(72),
     color: Colors.secTextColor,
+  },
+  titleContianer: {
+    flexDirection: "row",
+    marginBottom: rh(20),
   },
 });
