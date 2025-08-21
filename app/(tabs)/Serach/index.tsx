@@ -2,12 +2,13 @@ import Categorys from "@/components/Categorys";
 import { Colors, Fonts } from "@/constants/Colors";
 import { rf, rh, rw } from "@/utils/dimensions";
 import { useRouter } from "expo-router";
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Button, Searchbar, SegmentedButtons } from "react-native-paper";
 
 export default function Serach() {
-  const [value, setValue] = React.useState("");
+  const [value, setValue] = useState("");
+  const [q, setq] = useState("");
   const btns = [
     {
       value: "airing",
@@ -21,6 +22,9 @@ export default function Serach() {
   ];
   const router = useRouter();
 
+  function SerachByText() {
+    router.push({ pathname: "/SearchResults", params: { q, status: value } });
+  }
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
@@ -32,7 +36,15 @@ export default function Serach() {
         <Text style={styles.desTxt}>Serach for Anmie of your interest</Text>
       </View>
       <View style={styles.serachContainer}>
-        <Searchbar placeholder="Search" />
+        <Searchbar
+          inputStyle={styles.Searchbar}
+          value={q}
+          onChangeText={setq}
+          placeholderTextColor={"rgba(0,0,0,0.5)"}
+          placeholder="Search"
+          onSubmitEditing={SerachByText}
+          onIconPress={SerachByText}
+        />
       </View>
       <View style={styles.fillterContainer}>
         <SegmentedButtons
@@ -85,6 +97,10 @@ const styles = StyleSheet.create({
     fontSize: rf(92),
     color: Colors.secTextColor,
   },
+  Searchbar: {
+    fontFamily: Fonts.RoadRageRegular,
+    fontSize: rf(22),
+  },
   desTxt: {
     fontFamily: Fonts.RoadRageRegular,
     fontSize: rf(24),
@@ -96,7 +112,7 @@ const styles = StyleSheet.create({
     marginTop: rh(20),
   },
   Categorys: {
-    marginTop: rh(30),
+    marginTop: rh(50),
   },
   fillterContainer: {
     marginTop: rh(30),
@@ -113,7 +129,7 @@ const styles = StyleSheet.create({
     lineHeight: rh(24),
   },
   btnContaier: {
-    marginTop: rh(30),
+    marginTop: rh(60),
     alignItems: "center",
     justifyContent: "center",
   },
