@@ -7,7 +7,7 @@ import { rf, rh, rw } from "@/utils/dimensions";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import { Skeleton } from "moti/skeleton";
-import React, { memo, useEffect } from "react";
+import React, { memo } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { fromType } from "..";
 
@@ -16,7 +16,7 @@ function ListItem({
   isLoading,
   from,
 }: {
-  item: AnmieType;
+  item: AnmieType | null;
   isLoading: boolean;
   from: fromType;
 }) {
@@ -27,18 +27,12 @@ function ListItem({
     : require("@/assets/images/img.png");
   const router = useRouter();
 
-  useEffect(() => {
-    console.log(from);
-
-    return () => {};
-  }, []);
-
   return (
     <TouchableOpacity
       onPress={() =>
-        // !isLoading &&
+        !isLoading &&
         router.push({
-          pathname: `/AnmieInfo/${item.mal_id}`,
+          pathname: `/AnmieInfo/${item?.mal_id}`,
           params: {
             anmie: JSON.stringify(item),
           },
@@ -77,7 +71,7 @@ function ListItem({
               <LoveIcon width={rw(16)} height={rh(16)} />
             </View>
             <View style={styles.infoMin}>
-              <Text style={styles.infoTxt}>{item?.score || "unknow"}</Text>
+              <Text style={styles.infoTxt}>{item?.score ?? "unknow"}</Text>
               <StarIcon width={rw(20)} height={rh(20)} />
             </View>
           </View>
@@ -99,7 +93,7 @@ function getStyles(from: fromType, isHome: boolean) {
       color: Colors.textColor,
       fontSize: rf(30),
       paddingLeft: rw(7),
-      width: from == "Home" ? rw(130) : rw(90),
+      width: isHome ? rw(130) : rw(90),
     },
     info: {
       flexDirection: "row",

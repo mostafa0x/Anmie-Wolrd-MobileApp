@@ -1,3 +1,4 @@
+import Contant_Info from "@/components/ContantInfo";
 import GlassView from "@/components/GlassView";
 import ArrowLeftIcon from "@/components/Icons/ArrowLeftIcon";
 import NotFoundAnmie from "@/components/NotFoundAnmie";
@@ -32,8 +33,8 @@ export default function AnmieInfo({}: props) {
     return () => {};
   }, []);
 
-  return anmie ? (
-    <ScrollView contentContainerStyle={{ paddingBottom: rh(100) }}>
+  return item?.mal_id ? (
+    <ScrollView contentContainerStyle={{ paddingBottom: rh(30) }}>
       <View style={styles.appBar}>
         <TouchableOpacity onPress={() => router.back()}>
           <ArrowLeftIcon />
@@ -58,12 +59,13 @@ export default function AnmieInfo({}: props) {
             <Image
               style={styles.img}
               contentFit="cover"
+              transition={100}
               source={{ uri: item?.images?.webp?.image_url ?? "" }}
             />
           </View>
           <View style={styles.glassContiner}>
             <GlassView calledFrom="any">
-              {/* <Contant_Info item={item ?? null} /> */}
+              <Contant_Info item={item ?? null} />
             </GlassView>
           </View>
           <View style={styles.descContiner}>
@@ -102,8 +104,9 @@ const styles = StyleSheet.create({
     width: rw(352),
     height: rh(221),
     marginTop: rh(4),
+    top: rh(10),
+    left: rw(0),
     position: "absolute",
-    top: rh(0),
   },
   img: {
     width: "100%",
@@ -114,7 +117,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: rw(19),
   },
   glassContiner: {
-    marginTop: rh(187),
+    marginTop: rh(200),
     zIndex: -1,
   },
   descContiner: {

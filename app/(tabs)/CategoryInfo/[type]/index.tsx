@@ -1,16 +1,16 @@
 import ArrowLeftIcon from "@/components/Icons/ArrowLeftIcon";
 import ListAnmie from "@/components/List/index";
 import { Colors, Fonts } from "@/constants/Colors";
-import { useAnmieByCategory } from "@/hooks/GetAnmies";
+import { useAnmieByCategory } from "@/hooks/useAnmieByCategory";
 import { rf, rh, rw } from "@/utils/dimensions";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function CategoryInfo() {
   const router = useRouter();
   const { type } = useLocalSearchParams();
-  const Category = type ? (Array.isArray(type) ? type[0] : type) : null;
+  const Category = type ? (Array.isArray(type) ? type[0] : type) : "";
   const fristTwoTitle = useRef(Category?.slice(0, 2) ?? "");
   const afterTwoTitle = useRef(Category?.slice(2) ?? "");
   const {
@@ -21,7 +21,21 @@ export default function CategoryInfo() {
     isFetching,
     error,
     isError,
-  } = useAnmieByCategory("/anime", "upcoming");
+  } = useAnmieByCategory(
+    "/top/anime",
+    Category == "ongoing"
+      ? "airing"
+      : Category == "Popularity"
+      ? "bypopularity"
+      : Category ?? "empty"
+  );
+  const flatData = data?.pages.flatMap((page) => page?.data ?? []) ?? [];
+
+  useEffect(() => {
+    console.log(type);
+
+    return () => {};
+  }, [type]);
 
   const isLoadingPage = isLoading && isFetching;
 
@@ -38,8 +52,11 @@ export default function CategoryInfo() {
       </View>
       <View style={{}}>
         <ListAnmie
-          data={data?.pages?.flatMap((page) => page.data ?? []) ?? Array(9)}
-          isLoading={isLoadingPage}
+          // isLoadingPage
+          //     ? data?.pages?.flatMap((page: any) => page?.data ?? [])
+          //     : Array(9)
+          data={data?.pages?.flatMap((page) => page?.data ?? []) ?? Array(9)}
+          isLoading={isLoading}
           from={"Category"}
           hasNextPage={hasNextPage}
           fetchNextPage={fetchNextPage}

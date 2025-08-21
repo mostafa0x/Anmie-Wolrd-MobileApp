@@ -2,7 +2,7 @@ import { Colors, Fonts } from "@/constants/Colors";
 import { AnmieType } from "@/types/store/AppSliceType";
 import { rf, rh, rw } from "@/utils/dimensions";
 import { FlashList } from "@shopify/flash-list";
-import React, { memo, useEffect, useState } from "react";
+import React, { memo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import { useDispatch } from "react-redux";
@@ -16,7 +16,7 @@ function ListAnmie({
   hasNextPage,
   fetchNextPage,
 }: {
-  data: AnmieType[];
+  data: AnmieType[] | undefined;
   isLoading: boolean;
   from: fromType;
   hasNextPage?: boolean;
@@ -25,20 +25,15 @@ function ListAnmie({
   const dispatch = useDispatch();
   const isHome = from == "Home";
   const styles = getStyles(isHome);
-  const [CallingApi, setCallingApi] = useState(false);
-
-  useEffect(() => {
-    console.log(CallingApi);
-
-    return () => {};
-  }, [CallingApi]);
 
   return (
     <View style={styles.list}>
       <FlashList
-        data={data}
+        data={data ?? []}
         estimatedItemSize={203}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(item, index) =>
+          item?.mal_id?.toString() ?? index.toString()
+        }
         horizontal={isHome}
         numColumns={isHome ? 1 : 3}
         showsHorizontalScrollIndicator={false}
@@ -60,7 +55,8 @@ function ListAnmie({
           </View>
         )}
         ListFooterComponent={() =>
-          !isHome && (
+          !isHome &&
+          hasNextPage && (
             <View style={styles.loadingContainer}>
               <ActivityIndicator size={rf(50)} color={Colors.iconColor} />
             </View>
