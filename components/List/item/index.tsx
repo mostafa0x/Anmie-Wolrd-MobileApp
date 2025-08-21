@@ -2,6 +2,7 @@ import GlassView from "@/components/GlassView";
 import LoveIcon from "@/components/Icons/LoveIcon";
 import StarIcon from "@/components/Icons/StarIcon";
 import { Colors, Fonts } from "@/constants/Colors";
+import { setLastAnmieIndex } from "@/lib/store/AppSlice";
 import { AnmieType } from "@/types/store/AppSliceType";
 import { rf, rh, rw } from "@/utils/dimensions";
 import { Image } from "expo-image";
@@ -9,16 +10,19 @@ import { useRouter } from "expo-router";
 import { Skeleton } from "moti/skeleton";
 import React, { memo } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useDispatch } from "react-redux";
 import { fromType } from "..";
 
 function ListItem({
   item,
   isLoading,
   from,
+  index,
 }: {
   item: AnmieType | null;
   isLoading: boolean;
   from: fromType;
+  index: number;
 }) {
   const isHome = from == "Home";
   const styles = getStyles(from, isHome);
@@ -26,18 +30,21 @@ function ListItem({
     ? { uri: item?.images?.webp?.image_url }
     : require("@/assets/images/img.png");
   const router = useRouter();
+  const disPatch = useDispatch();
 
   return (
     <TouchableOpacity
-      onPress={() =>
-        !isLoading &&
-        router.push({
-          pathname: `/AnmieInfo/${item?.mal_id}`,
-          params: {
-            anmie: JSON.stringify(item),
-          },
-        })
-      }
+      onPress={() => {
+        if (!isLoading) {
+          disPatch(setLastAnmieIndex(index));
+          router.push({
+            pathname: `/AnmieInfo/${item?.mal_id}`,
+            params: {
+              anmie: JSON.stringify(item),
+            },
+          });
+        }
+      }}
     >
       <GlassView calledFrom={from}>
         {isLoading ? (
@@ -93,7 +100,7 @@ function getStyles(from: fromType, isHome: boolean) {
       color: Colors.textColor,
       fontSize: rf(30),
       paddingLeft: rw(7),
-      width: isHome ? rw(130) : rw(90),
+      width: isHome ? rw(130) : rw(115),
     },
     info: {
       flexDirection: "row",

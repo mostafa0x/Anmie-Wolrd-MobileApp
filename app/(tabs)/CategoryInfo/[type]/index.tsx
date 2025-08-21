@@ -29,7 +29,7 @@ export default function CategoryInfo() {
       ? "bypopularity"
       : Category ?? "empty"
   );
-  const flatData = data?.pages.flatMap((page) => page?.data ?? []) ?? [];
+  const flatData = data?.pages.flatMap((page) => page?.data ?? []) ?? Array(9);
 
   useEffect(() => {
     console.log(type);
@@ -37,12 +37,10 @@ export default function CategoryInfo() {
     return () => {};
   }, [type]);
 
-  const isLoadingPage = isLoading && isFetching;
-
   return (
     <View style={styles.container}>
       <View style={styles.appBar}>
-        <TouchableOpacity onPress={() => router.back()}>
+        <TouchableOpacity style={styles.icon} onPress={() => router.back()}>
           <ArrowLeftIcon />
         </TouchableOpacity>
         <View style={styles.titleContianer}>
@@ -52,10 +50,7 @@ export default function CategoryInfo() {
       </View>
       <View style={{}}>
         <ListAnmie
-          // isLoadingPage
-          //     ? data?.pages?.flatMap((page: any) => page?.data ?? [])
-          //     : Array(9)
-          data={data?.pages?.flatMap((page) => page?.data ?? []) ?? Array(9)}
+          data={flatData}
           isLoading={isLoading}
           from={"Category"}
           hasNextPage={hasNextPage}
@@ -86,6 +81,8 @@ const styles = StyleSheet.create({
   },
   titleContianer: {
     flexDirection: "row",
-    marginBottom: rh(20),
+  },
+  icon: {
+    paddingTop: rh(20),
   },
 });

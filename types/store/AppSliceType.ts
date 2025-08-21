@@ -1,9 +1,8 @@
 import { statusAnime } from "../statusAnmie";
 
 export interface AppSliceType {
-  topUpcomingAnime: AnmieType[];
-  topOngoinggAnime: AnmieType[];
   isScrolling: boolean;
+  lastAnmieIndex: number | null;
 }
 
 interface genresType {

@@ -1,11 +1,13 @@
 import { Colors, Fonts } from "@/constants/Colors";
 import { AnmieType } from "@/types/store/AppSliceType";
+import { StateType } from "@/types/store/StateType";
 import { rf, rh, rw } from "@/utils/dimensions";
 import { FlashList } from "@shopify/flash-list";
-import React, { memo } from "react";
+import { useFocusEffect, usePathname } from "expo-router";
+import React, { memo, useCallback, useRef } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ListItem from "./item/index";
 
 export type fromType = "Home" | "Category" | "any";
@@ -16,7 +18,7 @@ function ListAnmie({
   hasNextPage,
   fetchNextPage,
 }: {
-  data: AnmieType[] | undefined;
+  data: AnmieType[];
   isLoading: boolean;
   from: fromType;
   hasNextPage?: boolean;
@@ -25,15 +27,40 @@ function ListAnmie({
   const dispatch = useDispatch();
   const isHome = from == "Home";
   const styles = getStyles(isHome);
+  const listRef = useRef<FlashList<AnmieType>>(null);
+  const { lastAnmieIndex } = useSelector(
+    (state: StateType) => state.AppReducer
+  );
+  const path = usePathname();
+
+  useFocusEffect(
+    useCallback(() => {
+      const delay = setTimeout(() => {
+        if (
+          listRef.current &&
+          lastAnmieIndex != null &&
+          lastAnmieIndex < data.length
+        ) {
+          listRef.current.scrollToIndex({
+            index: lastAnmieIndex,
+            animated: false,
+          });
+        }
+      }, 250);
+
+      return () => {
+        clearTimeout(delay);
+      };
+    }, [lastAnmieIndex])
+  );
 
   return (
     <View style={styles.list}>
       <FlashList
+        ref={listRef}
         data={data ?? []}
         estimatedItemSize={203}
-        keyExtractor={(item, index) =>
-          item?.mal_id?.toString() ?? index.toString()
-        }
+        keyExtractor={(item, index) => index.toString()}
         horizontal={isHome}
         numColumns={isHome ? 1 : 3}
         showsHorizontalScrollIndicator={false}
@@ -68,8 +95,13 @@ function ListAnmie({
           }
         }}
         onEndReachedThreshold={0.8}
-        renderItem={({ item }) => (
-          <ListItem item={item} isLoading={isLoading} from={from} />
+        renderItem={({ item, index }: { item: AnmieType; index: number }) => (
+          <ListItem
+            item={item}
+            index={index}
+            isLoading={isLoading}
+            from={from}
+          />
         )}
       />
     </View>

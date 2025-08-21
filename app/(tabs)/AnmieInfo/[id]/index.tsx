@@ -22,9 +22,9 @@ export default function AnmieInfo({}: props) {
   const item: AnmieType | null = anmie
     ? JSON.parse(Array.isArray(anmie) ? anmie[0] : anmie)
     : null;
-  const title = (item?.title_english ?? "").split(" ");
-  const firstTitle = title[0] ?? "";
-  const restTitle = title.slice(1).join(" ");
+  const title = (item?.title_english ?? "Unknow").split("");
+  const firstTitle = item?.title_english ? title[0] ?? "" : title;
+  const restTitle = item?.title_english ? title.slice(1).join(" ") : "";
   const router = useRouter();
   const playerRef = useRef<YoutubeIframeRef>(null);
   useEffect(() => {
