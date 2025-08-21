@@ -9,7 +9,7 @@ import { rf, rh, rw } from "@/utils/dimensions";
 import { Image } from "expo-image";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { ScrollView } from "moti";
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { YoutubeIframeRef } from "react-native-youtube-iframe";
 
@@ -22,16 +22,11 @@ export default function AnmieInfo({}: props) {
   const item: AnmieType | null = anmie
     ? JSON.parse(Array.isArray(anmie) ? anmie[0] : anmie)
     : null;
-  const title = (item?.title_english ?? "Unknow").split("");
+  const title = (item?.title_english ?? "Unknow").split(" ");
   const firstTitle = item?.title_english ? title[0] ?? "" : title;
   const restTitle = item?.title_english ? title.slice(1).join(" ") : "";
   const router = useRouter();
   const playerRef = useRef<YoutubeIframeRef>(null);
-  useEffect(() => {
-    console.log(anmie);
-
-    return () => {};
-  }, []);
 
   return item?.mal_id ? (
     <ScrollView contentContainerStyle={{ paddingBottom: rh(30) }}>
@@ -58,17 +53,20 @@ export default function AnmieInfo({}: props) {
           <View style={styles.imgContanier}>
             <Image
               style={styles.img}
-              contentFit="cover"
+              contentFit="fill"
               transition={100}
               source={{ uri: item?.images?.webp?.image_url ?? "" }}
             />
           </View>
           <View style={styles.glassContiner}>
-            <GlassView calledFrom="any">
+            <GlassView type={1} calledFrom="any">
               <Contant_Info item={item ?? null} />
             </GlassView>
           </View>
           <View style={styles.descContiner}>
+            <View>
+              <Text style={styles.Synopsis}>Synopsis</Text>
+            </View>
             <Text style={styles.decTxt}>{item?.synopsis ?? ""}</Text>
           </View>
           <View style={styles.playerContinaer}>
@@ -102,7 +100,7 @@ const styles = StyleSheet.create({
   },
   imgContanier: {
     width: rw(352),
-    height: rh(221),
+    height: rh(410),
     marginTop: rh(4),
     top: rh(10),
     left: rw(0),
@@ -111,14 +109,13 @@ const styles = StyleSheet.create({
   img: {
     width: "100%",
     height: "100%",
-    borderRadius: rw(10),
+    borderRadius: rw(20),
   },
   contantContainer: {
     paddingHorizontal: rw(19),
   },
   glassContiner: {
-    marginTop: rh(200),
-    zIndex: -1,
+    marginTop: rh(220),
   },
   descContiner: {
     marginTop: rh(19),
@@ -127,10 +124,22 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.RoadRageRegular,
     fontSize: rf(20),
     color: Colors.textColor,
+    borderBottomWidth: 1,
+    borderColor: "rgba(255,255,255,0.3)",
+    paddingBottom: rh(10),
   },
   playerContinaer: {
     marginTop: rh(25),
     borderRadius: rw(20),
   },
   titleContiner: { flexDirection: "row", marginBottom: rh(0), flexShrink: 1 },
+  Synopsis: {
+    fontFamily: Fonts.RoadRageRegular,
+    fontSize: rf(32),
+    color: Colors.textColor,
+    borderBottomWidth: 1,
+    borderColor: "rgba(255,255,255,0.7)",
+
+    marginBottom: rh(10),
+  },
 });

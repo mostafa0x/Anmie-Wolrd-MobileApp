@@ -13,6 +13,7 @@ function GlobalError() {
   const imgs = useRef({
     def: require("@/assets/Character/def.png"),
     noInternet: require("@/assets/Character/noInternet.png"),
+    serverError: require("@/assets/Character/serverError.png"),
   });
   const { currentError } = useSelector(
     (state: StateType) => state.GlobalErrorReducer

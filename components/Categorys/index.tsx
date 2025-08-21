@@ -23,10 +23,12 @@ export default function Categorys({ title, filter }: props) {
 
   useEffect(() => {
     if (error) {
+      console.log(error.name);
+
       dispatch(
         setCurrentError({
           header: "An error occurred",
-          des: error?.name,
+          des: "Try Again",
           type: "noInternet",
         })
       );

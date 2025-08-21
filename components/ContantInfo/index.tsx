@@ -57,7 +57,7 @@ function Contant_Info({ item }: { item: AnmieType | null }) {
 const styles = StyleSheet.create({
   ContainerContant: {
     paddingHorizontal: rw(8),
-    marginTop: rh(25),
+    marginTop: rh(5),
     justifyContent: "space-between",
     flexDirection: "row",
     paddingBottom: rh(13),

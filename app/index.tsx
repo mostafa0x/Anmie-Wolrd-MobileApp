@@ -6,8 +6,9 @@ import { setLastAnmieIndex } from "@/lib/store/AppSlice";
 import { StateType } from "@/types/store/StateType";
 import { rh, rw } from "@/utils/dimensions";
 import { Image } from "expo-image";
+import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function HomeScreen() {
@@ -32,11 +33,13 @@ export default function HomeScreen() {
           style={styles.title}
           source={require("@/assets/images/title.png")}
         />
-        <SerachIcon
-          width={rw(35)}
-          height={rh(35)}
-          iconColor={Colors.iconColor}
-        />
+        <TouchableOpacity onPress={() => router.push("/Serach")}>
+          <SerachIcon
+            width={rw(35)}
+            height={rh(35)}
+            iconColor={Colors.iconColor}
+          />
+        </TouchableOpacity>
       </View>
       {/*slider */}
       <Slider />
