@@ -3,8 +3,8 @@ import { AnmieType } from "@/types/store/AppSliceType";
 import { StateType } from "@/types/store/StateType";
 import { rf, rh, rw } from "@/utils/dimensions";
 import { FlashList } from "@shopify/flash-list";
-import { useFocusEffect, usePathname } from "expo-router";
-import React, { memo, useCallback, useRef } from "react";
+import { usePathname } from "expo-router";
+import React, { memo, useRef } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,27 +33,6 @@ function ListAnmie({
   );
   const path = usePathname();
 
-  useFocusEffect(
-    useCallback(() => {
-      const delay = setTimeout(() => {
-        if (
-          listRef.current &&
-          lastAnmieIndex != null &&
-          lastAnmieIndex < data.length
-        ) {
-          listRef.current.scrollToIndex({
-            index: lastAnmieIndex,
-            animated: false,
-          });
-        }
-      }, 250);
-
-      return () => {
-        clearTimeout(delay);
-      };
-    }, [lastAnmieIndex])
-  );
-
   return (
     <View style={styles.list}>
       <FlashList
@@ -69,6 +48,11 @@ function ListAnmie({
           paddingRight: isHome ? rw(30) : rw(0),
           paddingBottom: isHome ? rh(10) : rh(500),
         }}
+        initialScrollIndex={
+          lastAnmieIndex != null && lastAnmieIndex < data.length
+            ? lastAnmieIndex ?? 0
+            : 0
+        }
         ItemSeparatorComponent={() =>
           !isHome ? (
             <View style={{ height: rh(32) }} />

@@ -26,9 +26,8 @@ function ListItem({
 }) {
   const isHome = from == "Home";
   const styles = getStyles(from, isHome);
-  const img = item?.images?.webp?.image_url
-    ? { uri: item?.images?.webp?.image_url }
-    : require("@/assets/images/img.png");
+  const img = { uri: item?.images?.webp?.image_url };
+
   const router = useRouter();
   const disPatch = useDispatch();
 

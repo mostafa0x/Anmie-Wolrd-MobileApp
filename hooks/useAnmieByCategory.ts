@@ -5,7 +5,7 @@ async function featchData(pageParam: number, url: string, filter: string) {
   const limitPerPage = 12;
   try {
     const res = await axiosClient.get(
-      `${url}?page=${pageParam}&limit=${limitPerPage}&filter=${filter}`
+      `${url}?page=${pageParam}&limit=${limitPerPage}&filter=${filter}&sfw=true`
     );
 
     return {

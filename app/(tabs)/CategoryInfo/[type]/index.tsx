@@ -6,6 +6,7 @@ import { rf, rh, rw } from "@/utils/dimensions";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useRef } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useDispatch } from "react-redux";
 
 export default function CategoryInfo() {
   const router = useRouter();
@@ -30,12 +31,12 @@ export default function CategoryInfo() {
       : Category ?? "empty"
   );
   const flatData = data?.pages.flatMap((page) => page?.data ?? []) ?? Array(9);
-
+  const dispatch = useDispatch();
   useEffect(() => {
-    console.log(type);
-
-    return () => {};
-  }, [type]);
+    return () => {
+      // dispatch(setLastAnmieIndex(null));
+    };
+  }, []);
 
   return (
     <View style={styles.container}>

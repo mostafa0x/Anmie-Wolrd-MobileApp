@@ -2,6 +2,7 @@ import Categorys from "@/components/Categorys";
 import SerachIcon from "@/components/Icons/SerachIcon";
 import Slider from "@/components/Slider";
 import { Colors } from "@/constants/Colors";
+import { setLastAnmieIndex } from "@/lib/store/AppSlice";
 import { StateType } from "@/types/store/StateType";
 import { rh, rw } from "@/utils/dimensions";
 import { Image } from "expo-image";
@@ -15,17 +16,7 @@ export default function HomeScreen() {
   const [isLoadingUpcoming, setIsLoadingUpcoming] = useState(true);
 
   useEffect(() => {
-    // const CallApi = async () => {
-    //   try {
-    //     const res = await axiosClient.get("/top/anime?filter=upcoming&limit=5");
-    //     dispatch(setUpcomingAnime(res.data.data));
-    //     setIsLoadingUpcoming(false);
-    //   } catch (err: any) {
-    //     console.log(err);
-    //     setIsLoadingUpcoming(true);
-    //   }
-    // };
-    // CallApi();
+    dispatch(setLastAnmieIndex(null));
   }, []);
 
   return (

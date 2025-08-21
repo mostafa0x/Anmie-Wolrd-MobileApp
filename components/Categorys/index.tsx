@@ -1,9 +1,11 @@
 import { Colors, Fonts } from "@/constants/Colors";
 import { useTopAnmie } from "@/hooks/useTopAnmie";
+import { setCurrentError } from "@/lib/store/GlobalErrorSlice";
 import { rf, rh, rw } from "@/utils/dimensions";
 import { useRouter } from "expo-router";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useDispatch } from "react-redux";
 import ArrowRightIcon from "../Icons/ArrowRightIcon";
 import ListAnmie from "../List";
 
@@ -16,8 +18,21 @@ export default function Categorys({ title, filter }: props) {
   const fristTwoTitle = useRef(title.slice(0, 2));
   const afterTwoTitle = useRef(title.slice(2));
   const router = useRouter();
-
+  const dispatch = useDispatch();
   const { data, isLoading, isError, error } = useTopAnmie("/top/anime", filter);
+
+  useEffect(() => {
+    if (error) {
+      dispatch(
+        setCurrentError({
+          header: "An error occurred",
+          des: error?.name,
+          type: "noInternet",
+        })
+      );
+    }
+    return () => {};
+  }, [error]);
 
   return (
     <View style={styles.Categorys}>
@@ -36,7 +51,7 @@ export default function Categorys({ title, filter }: props) {
       </View>
       <ListAnmie
         data={data?.data ?? Array(5)}
-        isLoading={isLoading}
+        isLoading={isError ? true : isLoading}
         from="Home"
       />
     </View>
