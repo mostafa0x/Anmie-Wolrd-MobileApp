@@ -3,6 +3,8 @@ import { rh, rw } from "@/utils/dimensions";
 import { Image } from "expo-image";
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import * as Animatable from "react-native-animatable";
+
 export default function SplashScreen() {
   return (
     <View style={styles.container}>
@@ -20,7 +22,13 @@ export default function SplashScreen() {
               source={require("@/assets/images/loading.gif")}
             />
           </View>
-          <LoadingIcon />
+          <Animatable.View
+            animation="tada"
+            iterationCount={Infinity}
+            easing={"ease-in-expo"}
+          >
+            <LoadingIcon />
+          </Animatable.View>
         </View>
       </View>
     </View>

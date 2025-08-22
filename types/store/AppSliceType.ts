@@ -3,6 +3,7 @@ import { statusAnime } from "../statusAnmie";
 export interface AppSliceType {
   isScrolling: boolean;
   lastAnmieIndex: number | null;
+  isLoadingApp: boolean;
 }
 
 interface genresType {
