@@ -1,5 +1,4 @@
 import LoadingIcon from "@/components/Icons/LoadingIcon";
-import { Colors } from "@/constants/Colors";
 import { rh, rw } from "@/utils/dimensions";
 import { Image } from "expo-image";
 import React from "react";
@@ -31,7 +30,6 @@ export default function SplashScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.splashBg,
   },
   imgContainer: {
     marginTop: rh(250),

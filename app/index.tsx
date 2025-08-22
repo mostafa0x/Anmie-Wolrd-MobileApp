@@ -1,4 +1,5 @@
 import Categorys from "@/components/Categorys";
+import MenuIcon from "@/components/Icons/MenuIcon";
 import SerachIcon from "@/components/Icons/SerachIcon";
 import Slider from "@/components/Slider";
 import { Colors } from "@/constants/Colors";
@@ -28,6 +29,9 @@ export default function HomeScreen() {
     >
       {/*appBar */}
       <View style={styles.appBar}>
+        <TouchableOpacity onPress={() => router.push("/Menu/page")}>
+          <MenuIcon width={rw(35)} height={rh(35)} />
+        </TouchableOpacity>
         <Image
           contentFit="contain"
           style={styles.title}
@@ -41,10 +45,7 @@ export default function HomeScreen() {
           />
         </TouchableOpacity>
       </View>
-      {/*slider */}
       <Slider />
-      {/* Lists */}
-
       <Categorys title="upcoming" filter="upcoming" />
       <Categorys title="Popularity" filter="bypopularity" />
       <Categorys title="ongoing" filter="airing" />

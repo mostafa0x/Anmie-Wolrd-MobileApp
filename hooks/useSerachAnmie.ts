@@ -5,7 +5,7 @@ async function FeatchData(page: number, q: string, status: string) {
   const limitPage = 12;
   try {
     const res = await axiosClient.get(
-      `/anime?page=${page}&limit=${limitPage}&q=${q}&status=${status}`
+      `/anime?page=${page}&limit=${limitPage}&q=${q}&status=${status}&sfw=true`
     );
     console.log(res.data);
 
