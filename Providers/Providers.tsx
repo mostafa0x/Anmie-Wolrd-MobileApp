@@ -27,15 +27,17 @@ export default function AllProviders({ children }: any) {
                   animation: "fade",
                 }}
               >
-                <Stack.Protected guard={true}>
+                <Stack.Protected guard={!!userToken}>
                   <Stack.Screen name="(tabs)/index" />
                   <Stack.Screen name="(tabs)/AnmieInfo/[id]/index" />
+                  <Stack.Screen name="(tabs)/SearchResults/index" />
                   <Stack.Screen name="(tabs)/CategoryInfo/[type]/index" />
                   <Stack.Screen name="(tabs)/Serach/index" />
-                  <Stack.Screen name="(tabs)/SearchResults/index" />
                   <Stack.Screen name="(tabs)/Menu/page" />
                 </Stack.Protected>
-                <Stack.Screen name="Login" />
+                <Stack.Protected guard={!!!userToken}>
+                  <Stack.Screen name="Login" />
+                </Stack.Protected>
               </Stack>
               <StatusBar />
             </SafeAreaView>
