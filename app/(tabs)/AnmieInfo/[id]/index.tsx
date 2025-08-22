@@ -28,10 +28,19 @@ export default function AnmieInfo({}: props) {
   const router = useRouter();
   const playerRef = useRef<YoutubeIframeRef>(null);
 
+  function handleBack() {
+    if (!router) return;
+    if (router.canGoBack()) {
+      router.back();
+    } else {
+      router.replace("/(tabs)/index");
+    }
+  }
+
   return item?.mal_id ? (
     <ScrollView contentContainerStyle={{ paddingBottom: rh(30) }}>
       <View style={styles.appBar}>
-        <TouchableOpacity onPress={() => router.back()}>
+        <TouchableOpacity onPress={() => handleBack()}>
           <ArrowLeftIcon />
         </TouchableOpacity>
 

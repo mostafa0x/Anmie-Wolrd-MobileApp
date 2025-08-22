@@ -12,6 +12,7 @@ export default function SearchResults() {
   const { data, isLoading, hasNextPage, fetchNextPage, isError, error } =
     useSerachAnmie(serachWord, statusType);
   const flatData = data?.pages.flatMap((page) => page.data ?? []);
+
   return (
     <View>
       <AppBar title={serachWord} statusType={statusType} />

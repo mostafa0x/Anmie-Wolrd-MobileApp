@@ -23,7 +23,10 @@ export default function HomeScreen() {
 
   return (
     <ScrollView
-      contentContainerStyle={{ flexGrow: 1, paddingBottom: rh(100) }}
+      contentContainerStyle={{
+        flexGrow: 1,
+        paddingBottom: rh(100),
+      }}
       showsVerticalScrollIndicator={false}
       scrollEnabled={isScrolling}
     >

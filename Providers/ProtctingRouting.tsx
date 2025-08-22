@@ -22,26 +22,45 @@ export default function ProtctingRoutingProvider({
   const { isLoadingApp } = useSelector((state: StateType) => state.AppReducer);
   const { userToken } = useSelector((state: StateType) => state.UserReducer);
   const [isMounted, setIsMounted] = useState(false);
+  const pathAuth = ["/Auth"];
+  const pathSafe = [
+    "/",
+    "/Serach",
+    "/SearchResults",
+    "/Serach",
+    "/Menu",
+    "/AnmieInfo",
+  ];
 
   useEffect(() => {
+    if (isMounted) return;
+    let isActive = true;
     const init = async () => {
       await useInit(dispatch);
-      setIsMounted(true);
+      if (isActive) setIsMounted(true);
+      dispatch(setIsLoadingApp(false));
     };
-    init();
+    const delaySplash = setTimeout(init, 600);
+    return () => {
+      clearTimeout(delaySplash);
+      isActive = false;
+    };
   }, []);
 
-  useEffect(() => {
-    if (!isMounted) return;
-
-    if (userToken) {
-      router.replace("/");
-    } else {
-      router.replace("/Auth");
-    }
-
-    dispatch(setIsLoadingApp(false));
-  }, [isMounted, userToken]);
+  // useEffect(() => {
+  //   if (!isMounted) return;
+  //   console.log("rerender");
+  //   if (userToken) {
+  //     if (pathAuth.includes(path)) {
+  //       router.replace("/");
+  //     }
+  //   } else {
+  //     if (pathSafe.includes(path)) {
+  //       router.replace("/Auth");
+  //     }
+  //   }
+  //   dispatch(setIsLoadingApp(false));
+  // }, [isMounted, userToken, path]);
 
   if (isLoadingApp) {
     return (

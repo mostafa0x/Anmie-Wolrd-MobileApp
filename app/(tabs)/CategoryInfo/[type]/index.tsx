@@ -38,10 +38,19 @@ export default function CategoryInfo() {
     };
   }, []);
 
+  function handleBack() {
+    if (!router) return;
+    if (router.canGoBack()) {
+      router.back();
+    } else {
+      router.replace("/");
+    }
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.appBar}>
-        <TouchableOpacity style={styles.icon} onPress={() => router.back()}>
+        <TouchableOpacity style={styles.icon} onPress={() => handleBack()}>
           <ArrowLeftIcon />
         </TouchableOpacity>
         <View style={styles.titleContianer}>

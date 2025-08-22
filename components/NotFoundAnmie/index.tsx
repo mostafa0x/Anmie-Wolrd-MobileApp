@@ -7,11 +7,20 @@ import { Button } from "react-native-paper";
 
 function NotFoundAnmie() {
   const router = useRouter();
+
+  function handleBack() {
+    if (!router) return;
+    if (router.canGoBack()) {
+      router.back();
+    } else {
+      router.replace("/");
+    }
+  }
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Not Found This Anmie</Text>
       <Button
-        onPress={() => router.back()}
+        onPress={() => handleBack()}
         buttonColor={Colors.iconColor}
         textColor={Colors.textColor}
         style={styles.btnContainer}

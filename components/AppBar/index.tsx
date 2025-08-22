@@ -15,9 +15,18 @@ export default function AppBar({
   const router = useRouter();
   const firstTitle = title.split(" ").splice(0, 1).join(" ");
   const restTitle = title.split(" ").slice(1).join(" ");
+
+  function handleBack() {
+    if (!router) return;
+    if (router.canGoBack()) {
+      router.back();
+    } else {
+      router.replace("/");
+    }
+  }
   return (
     <View style={styles.appBar}>
-      <TouchableOpacity onPress={() => router.back()}>
+      <TouchableOpacity onPress={() => handleBack()}>
         <ArrowLeftIcon />
       </TouchableOpacity>
 

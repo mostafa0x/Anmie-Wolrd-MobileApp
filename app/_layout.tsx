@@ -1,12 +1,11 @@
 import LinearView from "@/components/LinearView";
+import SplashScreen from "@/components/SplashScreen";
 import { store } from "@/lib/store";
 import AllProviders from "@/Providers/Providers";
 import { useFonts } from "expo-font";
 import { Slot } from "expo-router";
-import { StatusBar } from "expo-status-bar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-reanimated";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { Provider } from "react-redux";
 
 export default function RootLayout() {
@@ -15,23 +14,17 @@ export default function RootLayout() {
   });
 
   if (!loaded) {
-    // Async font loading only occurs in development.
-    return null;
+    return <SplashScreen />;
   }
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Provider store={store}>
-        <AllProviders>
-          <LinearView>
-            <SafeAreaProvider>
-              <SafeAreaView>
-                <Slot />
-                <StatusBar style="dark" />
-              </SafeAreaView>
-            </SafeAreaProvider>
-          </LinearView>
-        </AllProviders>
+        <LinearView>
+          <AllProviders>
+            <Slot />
+          </AllProviders>
+        </LinearView>
       </Provider>
     </GestureHandlerRootView>
   );
