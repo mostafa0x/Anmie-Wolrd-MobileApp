@@ -4,7 +4,7 @@ import React, { memo, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Avatar } from "react-native-paper";
 
-function AvatarFC({ avatar }: { avatar: string }) {
+function AvatarFC({ avatar = "" }: { avatar: string }) {
   const defAvatar = require("@/assets/images/Avatar.jpg");
   const currentAvatar = avatar ? { uri: avatar } : defAvatar;
   const [isLoading, setIsLoading] = useState(true);

@@ -4,7 +4,8 @@ import handleLogOut from "@/services/handleLogOut";
 import { StateType } from "@/types/store/StateType";
 import { rf, rh, rw } from "@/utils/dimensions";
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+import { Button } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Menu() {
@@ -21,7 +22,7 @@ export default function Menu() {
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <AvatarFC avatar="" />
+        <AvatarFC avatar={userData?.photo ?? ""} />
         <View style={styles.headerTEXT}>
           <Text style={styles.upperLable}>{userData?.name}</Text>
           <Text
@@ -35,9 +36,8 @@ export default function Menu() {
         </View>
       </View>
       <View style={styles.bordrBottom}></View>
-      <TouchableOpacity onPress={logout}>
-        <Text>Log out</Text>
-      </TouchableOpacity>
+
+      <Button onPress={logout}>Log out</Button>
     </View>
   );
 }
@@ -71,4 +71,5 @@ const styles = StyleSheet.create({
     marginLeft: rw(38),
     marginRight: rw(21),
   },
+  btnSignOut: {},
 });
