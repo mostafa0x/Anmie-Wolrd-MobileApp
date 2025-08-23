@@ -1,13 +1,23 @@
 import AvatarFC from "@/components/AvatarFC";
 import { Colors } from "@/constants/Colors";
+import handleLogOut from "@/services/handleLogOut";
 import { StateType } from "@/types/store/StateType";
 import { rf, rh, rw } from "@/utils/dimensions";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { useSelector } from "react-redux";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Menu() {
+  const dispatch = useDispatch();
   const { userData } = useSelector((state: StateType) => state.UserReducer);
+
+  async function logout() {
+    try {
+      await handleLogOut(dispatch);
+    } catch (err: any) {
+      console.log(err);
+    }
+  }
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -25,6 +35,9 @@ export default function Menu() {
         </View>
       </View>
       <View style={styles.bordrBottom}></View>
+      <TouchableOpacity onPress={logout}>
+        <Text>Log out</Text>
+      </TouchableOpacity>
     </View>
   );
 }

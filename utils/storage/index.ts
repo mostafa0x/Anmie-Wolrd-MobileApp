@@ -31,3 +31,11 @@ export const GetUserData = async () => {
     throw err;
   }
 };
+
+export const RemoveUserData = async () => {
+  try {
+    await AsyncStorage.multiRemove(["@userToken", "@userData"]);
+  } catch (err: any) {
+    throw err;
+  }
+};
