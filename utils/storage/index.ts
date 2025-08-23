@@ -1,4 +1,21 @@
+import { userDataType } from "@/types/store/UserSliceType";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
+type dataType = {
+  userToken: string | null;
+  userData: userDataType | null;
+};
+export const SetUserData = async (data: dataType) => {
+  if (!data.userToken) throw "not found data";
+  try {
+    await AsyncStorage.multiSet([
+      ["@userToken", data.userToken],
+      ["@userData", JSON.stringify(data.userData)],
+    ]);
+  } catch (err: any) {
+    throw err;
+  }
+};
 
 export const GetUserData = async () => {
   try {

@@ -5,7 +5,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import * as Animatable from "react-native-animatable";
 
-export default function SplashScreen() {
+export default function SplashScreenFC() {
   return (
     <View style={styles.container}>
       <View style={styles.imgContainer}>
