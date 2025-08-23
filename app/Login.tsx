@@ -2,17 +2,21 @@ import SignInGoogleIcon from "@/components/Icons/SignInGoogleIcon";
 import { handleLogin } from "@/services/handleLogin";
 import { rh, rw } from "@/utils/dimensions";
 import { Image } from "expo-image";
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { useDispatch } from "react-redux";
 
 const Login = () => {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
   async function loginByGoogle() {
+    if (isLoading) return;
+    setIsLoading(true);
     try {
       await handleLogin(dispatch);
     } catch (err: any) {
       console.log(err);
+      setIsLoading(false);
     }
   }
   return (
@@ -23,7 +27,12 @@ const Login = () => {
           source={require("@/assets/images/title.png")}
         />
       </View>
-      <TouchableOpacity onPress={loginByGoogle} style={styles.signInBtn}>
+      {isLoading && <View style={styles.signInBtn_disabled}></View>}
+      <TouchableOpacity
+        disabled={isLoading}
+        onPress={loginByGoogle}
+        style={styles.signInBtn}
+      >
         <SignInGoogleIcon />
       </TouchableOpacity>
     </View>
@@ -42,6 +51,17 @@ const styles = StyleSheet.create({
   },
   signInBtn: {
     marginTop: rh(160),
+  },
+  signInBtn_disabled: {
+    backgroundColor: "rgba(0,0,0,0.8)",
+    overflow: "hidden",
+    borderRadius: rw(8),
+    width: rw(220),
+    height: rh(40),
+    position: "absolute",
+    top: rh(252),
+    left: rw(85),
+    zIndex: 1,
   },
 });
 export default Login;

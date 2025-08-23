@@ -14,6 +14,7 @@ function GlobalError() {
     def: require("@/assets/Character/def.png"),
     noInternet: require("@/assets/Character/noInternet.png"),
     serverError: require("@/assets/Character/serverError.png"),
+    loading: require("@/assets/Character/loading.png"),
   });
   const { currentError } = useSelector(
     (state: StateType) => state.GlobalErrorReducer
@@ -56,7 +57,7 @@ function GlobalError() {
             minimumFontScale={0.5}
             ellipsizeMode="clip"
           >
-            {currentError?.des ?? "Try again later"}{" "}
+            {currentError?.des ?? "Try again later"}
             {/* No Internet connection. Please try again */}
           </Text>
           <Button

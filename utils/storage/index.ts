@@ -27,7 +27,6 @@ export const GetUserData = async () => {
       userData: userDataJSON,
     };
   } catch (err: any) {
-    console.log(err);
     throw err;
   }
 };

@@ -1,9 +1,9 @@
 import LinearView from "@/components/LinearView";
-import SplashScreenFC from "@/components/SplashScreen";
 import { store } from "@/lib/store";
 import AllProviders from "@/Providers/Providers";
 import { useFonts } from "expo-font";
 import { Slot } from "expo-router";
+import { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-reanimated";
 import { Provider } from "react-redux";
@@ -12,8 +12,13 @@ export default function RootLayout() {
     RoadRageRegular: require("../assets/fonts/RoadRage-Regular.ttf"),
   });
 
+  useEffect(() => {
+    if (loaded) {
+    }
+  }, [loaded]);
+
   if (!loaded) {
-    return <SplashScreenFC />;
+    return null;
   }
 
   return (
