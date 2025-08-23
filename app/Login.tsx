@@ -1,55 +1,49 @@
-import SignInGoogleIcon from "@/components/Icons/SignInGoogleIcon";
-import { rh, rw } from "@/utils/dimensions";
-import * as Google from "expo-auth-session/providers/google";
-import { Image } from "expo-image";
-import * as WebBrowser from "expo-web-browser";
+import {
+  GoogleSignin,
+  statusCodes,
+} from "@react-native-google-signin/google-signin";
 import React, { useEffect } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { useDispatch } from "react-redux";
+import { Button, StyleSheet, View } from "react-native";
 
-WebBrowser.maybeCompleteAuthSession();
-
-export default function Auth() {
-  const dispatch = useDispatch();
-
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    androidClientId:
-      "860499439086-qeiqhfb270m1hjif5fcr3susab4i4p34.apps.googleusercontent.com",
-  });
-
+export default function App() {
   useEffect(() => {
-    if (response?.type === "success") {
-      const { authentication } = response;
-      console.log("Token:", authentication?.accessToken);
+    GoogleSignin.configure({
+      webClientId:
+        "860499439086-c9kq4an7aqgqf4bkb0kg5ia7tppgcu40.apps.googleusercontent.com", // من Google Console
+      offlineAccess: true, // لو عايز refresh token
+    });
+  }, []);
+
+  const signIn = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      console.log("User Info:", userInfo);
+      // تقدر هنا تبعت التوكن للسيرفر أو تخزن البيانات في Redux/AsyncStorage
+    } catch (error: any) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        console.log("User cancelled the login flow");
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        console.log("Sign in in progress");
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        console.log("Play services not available or outdated");
+      } else {
+        console.error("Some other error happened:", error);
+      }
     }
-  }, [response]);
+  };
 
   return (
     <View style={styles.container}>
-      <View>
-        <Image
-          style={styles.titleImg}
-          source={require("@/assets/images/title.png")}
-        />
-      </View>
-      <TouchableOpacity onPress={() => promptAsync()} style={styles.signInBtn}>
-        <SignInGoogleIcon />
-      </TouchableOpacity>
+      <Button title="Sign in with Google" onPress={signIn} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: rw(53),
-    marginTop: rh(157),
+    flex: 1,
+    justifyContent: "center",
     alignItems: "center",
-  },
-  titleImg: {
-    width: rw(285),
-    height: rh(92),
-  },
-  signInBtn: {
-    marginTop: rh(160),
   },
 });
