@@ -1,23 +1,21 @@
-import Contant_Info from "@/components/ContantInfo";
-import GlassView from "@/components/GlassView";
+import AnmieCard from "@/components/AnmieCard";
 import ArrowLeftIcon from "@/components/Icons/ArrowLeftIcon";
-import LoveBtnIcon from "@/components/Icons/LoveBtnIcon";
 import NotFoundAnmie from "@/components/NotFoundAnmie";
 import VideoPlayer from "@/components/VideoPlayer";
 import { Colors, Fonts } from "@/constants/Colors";
 import { AnmieType } from "@/types/store/AppSliceType";
 import { rf, rh, rw } from "@/utils/dimensions";
-import { Image } from "expo-image";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { ScrollView } from "moti";
-import { Skeleton } from "moti/skeleton";
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { YoutubeIframeRef } from "react-native-youtube-iframe";
 
 interface props {
   anmie: AnmieType;
 }
+const videoSource =
+  "https://hianime.to/watch/365-days-to-the-wedding-19332?ep=128366";
 
 export default function AnmieInfo({}: props) {
   const { anmie } = useLocalSearchParams();
@@ -29,7 +27,7 @@ export default function AnmieInfo({}: props) {
   const restTitle = item?.title_english ? title.slice(1).join(" ") : "";
   const router = useRouter();
   const playerRef = useRef<YoutubeIframeRef>(null);
-  const [isLoadingImg, setisLoadingImg] = useState(true);
+
   function handleBack() {
     if (!router) return;
     if (router.canGoBack()) {
@@ -61,28 +59,7 @@ export default function AnmieInfo({}: props) {
       </View>
       <View style={styles.contantContainer}>
         <View>
-          <View style={styles.imgContanier}>
-            <Skeleton radius={rw(20)} show={isLoadingImg}>
-              <Image
-                style={styles.img}
-                contentFit="fill"
-                transition={100}
-                onLoadStart={() => setisLoadingImg(true)}
-                onLoadEnd={() => setisLoadingImg(false)}
-                source={{ uri: item?.images?.webp?.large_image_url ?? "" }}
-              />
-            </Skeleton>
-            <View style={{ position: "absolute", top: rh(0), right: rw(0) }}>
-              <TouchableOpacity>
-                <LoveBtnIcon isMyFav={false} />
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={styles.glassContiner}>
-            <GlassView type={1} calledFrom="any">
-              <Contant_Info item={item ?? null} />
-            </GlassView>
-          </View>
+          <AnmieCard item={item} />
           <View style={styles.descContiner}>
             <View>
               <Text style={styles.Synopsis}>Synopsis</Text>
@@ -120,19 +97,7 @@ const styles = StyleSheet.create({
     fontSize: rf(48),
     color: Colors.secTextColor,
   },
-  imgContanier: {
-    width: rw(352),
-    height: rh(410),
-    marginTop: rh(4),
-    top: rh(10),
-    left: rw(0),
-    position: "absolute",
-  },
-  img: {
-    width: "100%",
-    height: "100%",
-    borderRadius: rw(20),
-  },
+
   contantContainer: {
     paddingHorizontal: rw(19),
   },
