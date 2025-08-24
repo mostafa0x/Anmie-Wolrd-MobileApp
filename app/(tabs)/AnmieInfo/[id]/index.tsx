@@ -71,6 +71,9 @@ export default function AnmieInfo({}: props) {
             <VideoPlayer ref={playerRef} item={item} />
           </View>
           <View style={styles.CharactersList}>
+            <View>
+              <Text style={styles.Synopsis}>Characters & Voice Actors</Text>
+            </View>
             <CharactersList item={item} />
           </View>
         </View>
@@ -130,5 +133,10 @@ const styles = StyleSheet.create({
     borderColor: "rgba(255,255,255,0.7)",
     marginBottom: rh(10),
   },
-  CharactersList: { marginTop: rh(50), height: "auto" },
+  CharactersList: {
+    marginTop: rh(50),
+    height: "auto",
+    borderBottomWidth: 1,
+    borderColor: "rgba(255,255,255,0.3)",
+  },
 });
