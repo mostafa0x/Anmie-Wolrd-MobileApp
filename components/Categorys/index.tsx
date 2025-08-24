@@ -52,7 +52,7 @@ export default function Categorys({ title, filter }: props) {
         </TouchableOpacity>
       </View>
       <ListAnmie
-        data={data?.data ?? Array(5)}
+        data={data?.data}
         isLoading={isError ? true : isLoading}
         from="Home"
       />

@@ -1,19 +1,16 @@
 import { Colors, Fonts } from "@/constants/Colors";
 import { AnmieType } from "@/types/store/AppSliceType";
-import { StateType } from "@/types/store/StateType";
 import { rf, rh, rw } from "@/utils/dimensions";
 import { FlashList } from "@shopify/flash-list";
-import { usePathname } from "expo-router";
 import React, { memo, useRef } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
-import { useDispatch, useSelector } from "react-redux";
 import ListItem from "./item/index";
 
 export type fromType = "Home" | "Category" | "any";
 function ListAnmie({
   data,
-  isLoading,
+  isLoading = true,
   from,
   hasNextPage,
   fetchNextPage,
@@ -24,22 +21,18 @@ function ListAnmie({
   hasNextPage?: boolean;
   fetchNextPage?: any;
 }) {
-  const dispatch = useDispatch();
   const isHome = from == "Home";
   const styles = getStyles(isHome);
   const listRef = useRef<FlashList<AnmieType>>(null);
-  const { lastAnmieIndex } = useSelector(
-    (state: StateType) => state.AppReducer
-  );
-  const path = usePathname();
-
   return (
     <View style={styles.list}>
       <FlashList
         ref={listRef}
         data={isLoading ? Array(4) : data ?? []}
-        estimatedItemSize={203}
-        keyExtractor={(item, index) => index.toString()}
+        estimatedItemSize={isHome ? 133 : 203}
+        keyExtractor={(item, index) =>
+          item?.mal_id ? item?.mal_id.toString() : index.toString()
+        }
         horizontal={isHome}
         numColumns={isHome ? 1 : 3}
         scrollEnabled={!isLoading}
@@ -49,13 +42,13 @@ function ListAnmie({
           paddingRight: isHome ? rw(30) : rw(0),
           paddingBottom: isHome ? rh(10) : rh(500),
         }}
-        initialScrollIndex={
-          from == "Category" &&
-          lastAnmieIndex != null &&
-          lastAnmieIndex < data.length
-            ? lastAnmieIndex ?? 0
-            : 0
-        }
+        // initialScrollIndex={
+        //   from == "Category" &&
+        //   lastAnmieIndex != null &&
+        //   lastAnmieIndex < data.length
+        //     ? lastAnmieIndex ?? 0
+        //     : 0
+        // }
         ItemSeparatorComponent={() =>
           !isHome ? (
             <View style={{ height: rh(32) }} />

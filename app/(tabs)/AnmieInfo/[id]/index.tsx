@@ -10,7 +10,8 @@ import { rf, rh, rw } from "@/utils/dimensions";
 import { Image } from "expo-image";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { ScrollView } from "moti";
-import React, { useRef } from "react";
+import { Skeleton } from "moti/skeleton";
+import React, { useRef, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { YoutubeIframeRef } from "react-native-youtube-iframe";
 
@@ -28,7 +29,7 @@ export default function AnmieInfo({}: props) {
   const restTitle = item?.title_english ? title.slice(1).join(" ") : "";
   const router = useRouter();
   const playerRef = useRef<YoutubeIframeRef>(null);
-
+  const [isLoadingImg, setisLoadingImg] = useState(true);
   function handleBack() {
     if (!router) return;
     if (router.canGoBack()) {
@@ -61,12 +62,16 @@ export default function AnmieInfo({}: props) {
       <View style={styles.contantContainer}>
         <View>
           <View style={styles.imgContanier}>
-            <Image
-              style={styles.img}
-              contentFit="fill"
-              transition={100}
-              source={{ uri: item?.images?.webp?.image_url ?? "" }}
-            />
+            <Skeleton radius={rw(20)} show={isLoadingImg}>
+              <Image
+                style={styles.img}
+                contentFit="fill"
+                transition={100}
+                onLoadStart={() => setisLoadingImg(true)}
+                onLoadEnd={() => setisLoadingImg(false)}
+                source={{ uri: item?.images?.webp?.image_url ?? "" }}
+              />
+            </Skeleton>
             <View style={{ position: "absolute", top: rh(0), right: rw(0) }}>
               <TouchableOpacity>
                 <LoveBtnIcon isMyFav={false} />

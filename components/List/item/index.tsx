@@ -24,12 +24,9 @@ function ListItem({
   from: fromType;
   index: number;
 }) {
-  const isHome = from == "Home";
-  const styles = getStyles(from, isHome);
-  const img = { uri: item?.images?.webp?.large_image_url };
-
-  const router = useRouter();
   const disPatch = useDispatch();
+  const router = useRouter();
+  const isHome = from == "Home";
 
   return (
     <TouchableOpacity
@@ -48,13 +45,16 @@ function ListItem({
       <GlassView calledFrom={from}>
         {isLoading ? (
           <Skeleton
-            width={styles.img.width}
+            width={isHome ? styles.imgHome.width : styles.img.width}
             height={styles.img.height}
             radius={rw(20)}
             colorMode="dark"
           />
         ) : (
-          <Image style={styles.img} source={img} />
+          <Image
+            style={[styles.img, isHome && styles.imgHome]}
+            source={item?.images?.webp?.large_image_url}
+          />
         )}
         {isLoading ? (
           <View style={{ marginTop: rh(20), paddingHorizontal: rw(10) }}>
@@ -65,7 +65,11 @@ function ListItem({
             />
           </View>
         ) : (
-          <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
+          <Text
+            style={[styles.title, isHome && styles.titleHome]}
+            numberOfLines={1}
+            ellipsizeMode="tail"
+          >
             {item?.title_english ?? "unkonw"}
           </Text>
         )}
@@ -87,36 +91,40 @@ function ListItem({
   );
 }
 
-function getStyles(from: fromType, isHome: boolean) {
-  return StyleSheet.create({
-    img: {
-      width: isHome ? rw(132) : rw(113),
-      height: rh(134),
-      borderRadius: rw(20),
-    },
-    title: {
-      fontFamily: Fonts.RoadRageRegular,
-      color: Colors.textColor,
-      fontSize: rf(30),
-      paddingLeft: rw(7),
-      width: isHome ? rw(130) : rw(115),
-    },
-    info: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      paddingHorizontal: rw(12),
-    },
-    infoTxt: {
-      fontFamily: Fonts.RoadRageRegular,
-      fontSize: rf(16),
-      color: Colors.textColor,
-    },
-    infoMin: {
-      flexDirection: "row",
-      alignItems: "center",
-      gap: rw(3),
-    },
-  });
-}
+const styles = StyleSheet.create({
+  img: {
+    width: rw(113),
+    height: rh(134),
+    borderRadius: rw(20),
+  },
+  imgHome: {
+    width: rw(132),
+  },
+  title: {
+    fontFamily: Fonts.RoadRageRegular,
+    color: Colors.textColor,
+    fontSize: rf(30),
+    paddingLeft: rw(7),
+    width: rw(115),
+  },
+  titleHome: {
+    width: rw(130),
+  },
+  info: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: rw(12),
+  },
+  infoTxt: {
+    fontFamily: Fonts.RoadRageRegular,
+    fontSize: rf(16),
+    color: Colors.textColor,
+  },
+  infoMin: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: rw(3),
+  },
+});
 
 export default memo(ListItem);

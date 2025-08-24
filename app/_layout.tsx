@@ -2,7 +2,7 @@ import LinearView from "@/components/LinearView";
 import { store } from "@/lib/store";
 import AllProviders from "@/Providers/Providers";
 import { useFonts } from "expo-font";
-import { Slot, SplashScreen } from "expo-router";
+import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-reanimated";
@@ -29,7 +29,13 @@ export default function RootLayout() {
       <Provider store={store}>
         <LinearView>
           <AllProviders>
-            <Slot />
+            <Stack
+              screenOptions={{
+                headerShown: false,
+                contentStyle: { backgroundColor: "transparent" },
+                animation: "fade",
+              }}
+            />
           </AllProviders>
         </LinearView>
       </Provider>

@@ -3,23 +3,21 @@ import MenuIcon from "@/components/Icons/MenuIcon";
 import SerachIcon from "@/components/Icons/SerachIcon";
 import Slider from "@/components/Slider";
 import { Colors } from "@/constants/Colors";
-import { setLastAnmieIndex } from "@/lib/store/AppSlice";
 import { StateType } from "@/types/store/StateType";
 import { rh, rw } from "@/utils/dimensions";
 import { Image } from "expo-image";
 import { router } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function HomeScreen() {
   const dispatch = useDispatch();
   const { isScrolling } = useSelector((state: StateType) => state.AppReducer);
-  const [isLoadingUpcoming, setIsLoadingUpcoming] = useState(true);
 
-  useEffect(() => {
-    dispatch(setLastAnmieIndex(null));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(setLastAnmieIndex(null));
+  // }, []);
 
   return (
     <ScrollView
