@@ -1,14 +1,16 @@
 import Categorys from "@/components/Categorys";
+import GenresContainer from "@/components/GenresContainer";
 import { Colors, Fonts } from "@/constants/Colors";
+import { GenresTypes } from "@/types/GenresTypes";
 import { rf, rh, rw } from "@/utils/dimensions";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { Button, Searchbar, SegmentedButtons } from "react-native-paper";
 
 export default function Serach() {
   const [statusValue, setStatusValue] = useState("");
-  const [genresValue, setGenresValue] = useState("");
+  const [genresValue, setGenresValue] = useState<GenresTypes>("");
   const [q, setq] = useState("");
   const btns = [
     {
@@ -21,19 +23,7 @@ export default function Serach() {
     },
     { value: "upcoming", label: "upcoming" },
   ];
-  const genresbtns = [
-    {
-      value: "1_Action",
-      label: "Action",
-    },
-    {
-      value: "2_Adventure",
-      label: "Adventure",
-    },
-    { value: "8_Drama", label: "Drama" },
-    { value: "14_Horror", label: "Horror" },
-    { value: "22_Romance", label: "Romance" },
-  ];
+
   const router = useRouter();
 
   function SerachByText() {
@@ -85,37 +75,10 @@ export default function Serach() {
             label: btn.label.charAt(0).toLocaleUpperCase() + btn.label.slice(1),
           }))}
         />
-        <View style={styles.genresContainer}>
-          {genresbtns.map((btn, index) => (
-            <TouchableOpacity
-              key={index}
-              style={[
-                styles.genresBtn,
-                {
-                  backgroundColor:
-                    genresValue == btn.value
-                      ? Colors.iconColor
-                      : "rgba(0,0,0,0.2)",
-                },
-              ]}
-              onPress={() =>
-                setGenresValue(genresValue === btn.value ? "" : btn.value)
-              }
-            >
-              <Text
-                style={{
-                  color: Colors.textColor,
-                  width: "100%",
-                  textAlign: "center",
-                  fontFamily: Fonts.RoadRageRegular,
-                  fontSize: rf(22),
-                }}
-              >
-                {btn.label.charAt(0).toUpperCase() + btn.label.slice(1)}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </View>
+        <GenresContainer
+          genresValue={genresValue}
+          setGenresValue={setGenresValue}
+        />
       </View>
       <View style={styles.Categorys}>
         <Categorys title="Popularity" filter="bypopularity" />
