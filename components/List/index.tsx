@@ -37,7 +37,7 @@ function ListAnmie({
     <View style={styles.list}>
       <FlashList
         ref={listRef}
-        data={data ?? []}
+        data={isLoading ? Array(4) : data ?? []}
         estimatedItemSize={203}
         keyExtractor={(item, index) => index.toString()}
         horizontal={isHome}

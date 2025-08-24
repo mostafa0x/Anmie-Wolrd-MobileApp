@@ -1,4 +1,5 @@
 import SignInGoogleIcon from "@/components/Icons/SignInGoogleIcon";
+import Loader from "@/components/Loader";
 import { handleLogin } from "@/services/handleLogin";
 import { rh, rw } from "@/utils/dimensions";
 import { Image } from "expo-image";
@@ -20,22 +21,25 @@ const Login = () => {
     }
   }
   return (
-    <View style={styles.container}>
-      <View>
-        <Image
-          style={styles.titleImg}
-          source={require("@/assets/images/title.png")}
-        />
+    <>
+      {isLoading && <Loader />}
+      <View style={styles.container}>
+        <View>
+          <Image
+            style={styles.titleImg}
+            source={require("@/assets/images/title.png")}
+          />
+        </View>
+        {isLoading && <View style={styles.signInBtn_disabled}></View>}
+        <TouchableOpacity
+          disabled={isLoading}
+          onPress={loginByGoogle}
+          style={styles.signInBtn}
+        >
+          <SignInGoogleIcon />
+        </TouchableOpacity>
       </View>
-      {isLoading && <View style={styles.signInBtn_disabled}></View>}
-      <TouchableOpacity
-        disabled={isLoading}
-        onPress={loginByGoogle}
-        style={styles.signInBtn}
-      >
-        <SignInGoogleIcon />
-      </TouchableOpacity>
-    </View>
+    </>
   );
 };
 

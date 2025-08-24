@@ -24,7 +24,7 @@ export default function ProtctingRoutingProvider({
   const { isLoadingApp } = useSelector((state: StateType) => state.AppReducer);
   const { userToken } = useSelector((state: StateType) => state.UserReducer);
   const [isMounted, setIsMounted] = useState(false);
-  const pathAuth = ["/Auth"];
+  const pathAuth = ["/Login"];
   const pathSafe = [
     "/",
     "/Serach",
@@ -32,6 +32,7 @@ export default function ProtctingRoutingProvider({
     "/Serach",
     "/Menu",
     "/AnmieInfo",
+    "/MyFavorite",
   ];
 
   useEffect(() => {
@@ -49,20 +50,20 @@ export default function ProtctingRoutingProvider({
     };
   }, []);
 
-  // useEffect(() => {
-  //   if (!isMounted) return;
-  //   console.log("rerender");
-  //   if (userToken) {
-  //     if (pathAuth.includes(path)) {
-  //       router.replace("/");
-  //     }
-  //   } else {
-  //     if (pathSafe.includes(path)) {
-  //       router.replace("/Auth");
-  //     }
-  //   }
-  //   dispatch(setIsLoadingApp(false));
-  // }, [isMounted, userToken, path]);
+  useEffect(() => {
+    if (!isMounted) return;
+    console.log(path);
+    if (userToken) {
+      if (pathAuth.includes(path)) {
+        router.replace("/");
+      }
+    } else {
+      if (pathSafe.includes(path)) {
+        router.replace("/Login");
+      }
+    }
+    dispatch(setIsLoadingApp(false));
+  }, [isMounted, userToken, path]);
 
   if (isLoadingApp) {
     return (

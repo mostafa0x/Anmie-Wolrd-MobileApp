@@ -6,11 +6,13 @@ import { Colors, Fonts } from "@/constants/Colors";
 import handleLogOut from "@/services/handleLogOut";
 import { StateType } from "@/types/store/StateType";
 import { rf, rh, rw } from "@/utils/dimensions";
+import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Menu() {
+  const router = useRouter();
   const dispatch = useDispatch();
   const { userData } = useSelector((state: StateType) => state.UserReducer);
   const [isLoading, setisLoading] = useState(false);
@@ -44,8 +46,11 @@ export default function Menu() {
           </View>
         </View>
         <View style={[styles.bordrBottom, styles.boderSpace]}></View>
-        <TouchableOpacity style={styles.btnContainer}>
-          <LoveIcon width={rw(26)} iconColor="#3B65F0" />
+        <TouchableOpacity
+          onPress={() => router.push("/MyFavorite")}
+          style={styles.btnContainer}
+        >
+          <LoveIcon width={rw(26)} height={rh(24)} iconColor="#3B65F0" />
           <Text style={styles.MyfavoriteTxt}>My favorite</Text>
         </TouchableOpacity>
         <View style={styles.bottomView}>
