@@ -47,7 +47,7 @@ export default function Menu() {
         </View>
         <View style={[styles.bordrBottom, styles.boderSpace]}></View>
         <TouchableOpacity
-          onPress={() => router.push("/MyFavorite")}
+          onPress={() => router.push("/MyFavorite" as any)}
           style={styles.btnContainer}
         >
           <LoveIcon width={rw(26)} height={rh(24)} iconColor="#3B65F0" />

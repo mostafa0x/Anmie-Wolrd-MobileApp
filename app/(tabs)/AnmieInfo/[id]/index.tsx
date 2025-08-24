@@ -1,6 +1,7 @@
 import Contant_Info from "@/components/ContantInfo";
 import GlassView from "@/components/GlassView";
 import ArrowLeftIcon from "@/components/Icons/ArrowLeftIcon";
+import LoveBtnIcon from "@/components/Icons/LoveBtnIcon";
 import NotFoundAnmie from "@/components/NotFoundAnmie";
 import VideoPlayer from "@/components/VideoPlayer";
 import { Colors, Fonts } from "@/constants/Colors";
@@ -33,7 +34,7 @@ export default function AnmieInfo({}: props) {
     if (router.canGoBack()) {
       router.back();
     } else {
-      router.replace("/(tabs)/index");
+      router.replace("/(tabs)/index" as any);
     }
   }
 
@@ -66,6 +67,11 @@ export default function AnmieInfo({}: props) {
               transition={100}
               source={{ uri: item?.images?.webp?.image_url ?? "" }}
             />
+            <View style={{ position: "absolute", top: rh(0), right: rw(0) }}>
+              <TouchableOpacity>
+                <LoveBtnIcon />
+              </TouchableOpacity>
+            </View>
           </View>
           <View style={styles.glassContiner}>
             <GlassView type={1} calledFrom="any">
@@ -151,4 +157,5 @@ const styles = StyleSheet.create({
 
     marginBottom: rh(10),
   },
+  btnLove: {},
 });

@@ -32,7 +32,7 @@ export default function HomeScreen() {
     >
       {/*appBar */}
       <View style={styles.appBar}>
-        <TouchableOpacity onPress={() => router.push("/Menu")}>
+        <TouchableOpacity onPress={() => router.push("/Menu" as any)}>
           <MenuIcon width={rw(35)} height={rh(35)} />
         </TouchableOpacity>
         <Image

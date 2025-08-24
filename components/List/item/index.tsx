@@ -26,7 +26,7 @@ function ListItem({
 }) {
   const isHome = from == "Home";
   const styles = getStyles(from, isHome);
-  const img = { uri: item?.images?.webp?.image_url };
+  const img = { uri: item?.images?.webp?.large_image_url };
 
   const router = useRouter();
   const disPatch = useDispatch();
@@ -37,7 +37,7 @@ function ListItem({
         if (!isLoading) {
           disPatch(setLastAnmieIndex(index));
           router.push({
-            pathname: `/AnmieInfo/${item?.mal_id}`,
+            pathname: `/AnmieInfo/${item?.mal_id}` as any,
             params: {
               anmie: JSON.stringify(item),
             },
