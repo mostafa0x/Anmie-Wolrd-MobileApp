@@ -1,4 +1,5 @@
 import AnmieCard from "@/components/AnmieCard";
+import CharactersList from "@/components/CharactersList";
 import ArrowLeftIcon from "@/components/Icons/ArrowLeftIcon";
 import NotFoundAnmie from "@/components/NotFoundAnmie";
 import VideoPlayer from "@/components/VideoPlayer";
@@ -14,8 +15,6 @@ import { YoutubeIframeRef } from "react-native-youtube-iframe";
 interface props {
   anmie: AnmieType;
 }
-const videoSource =
-  "https://hianime.to/watch/365-days-to-the-wedding-19332?ep=128366";
 
 export default function AnmieInfo({}: props) {
   const { anmie } = useLocalSearchParams();
@@ -70,6 +69,9 @@ export default function AnmieInfo({}: props) {
           </View>
           <View style={styles.playerContinaer}>
             <VideoPlayer ref={playerRef} item={item} />
+          </View>
+          <View style={styles.CharactersList}>
+            <CharactersList />
           </View>
         </View>
       </View>
@@ -129,5 +131,5 @@ const styles = StyleSheet.create({
 
     marginBottom: rh(10),
   },
-  btnLove: {},
+  CharactersList: { marginTop: rh(50) },
 });
