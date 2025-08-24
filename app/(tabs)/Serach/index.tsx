@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   serachContainer: {
     paddingHorizontal: rw(20),
 
-    marginTop: rh(10),
+    marginTop: rh(5),
   },
   Categorys: {
     marginTop: rh(0),
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
   fillterContainer: {
     marginTop: rh(20),
     paddingHorizontal: rw(20),
-    gap: rh(10),
+    gap: rh(5),
   },
   btn: {
     width: rw(200),

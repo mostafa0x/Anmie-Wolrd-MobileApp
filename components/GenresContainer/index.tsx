@@ -23,6 +23,9 @@ function GenresContainer({
     { value: "8_Drama", label: "Drama" },
     { value: "14_Horror", label: "Horror" },
     { value: "22_Romance", label: "Romance" },
+    { value: "4_Comedy", label: "Comedy" },
+    { value: "30_Sports", label: "Sports" },
+    { value: "46_Award Winning", label: "Award Winning" },
   ];
   return (
     <View style={styles.genresContainer}>
@@ -40,15 +43,7 @@ function GenresContainer({
             setGenresValue(genresValue === btn.value ? "" : btn.value)
           }
         >
-          <Text
-            style={{
-              color: Colors.textColor,
-              width: "100%",
-              textAlign: "center",
-              fontFamily: Fonts.RoadRageRegular,
-              fontSize: rf(22),
-            }}
-          >
+          <Text style={styles.labelTile}>
             {btn.label.charAt(0).toUpperCase() + btn.label.slice(1)}
           </Text>
         </TouchableOpacity>
@@ -64,11 +59,19 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   genresBtn: {
-    width: "30%",
+    width: "25%",
     marginVertical: rh(3),
-    padding: rw(10),
+    marginHorizontal: rw(3),
+    padding: rw(5),
     borderRadius: rw(8),
     alignItems: "center",
+  },
+  labelTile: {
+    color: Colors.textColor,
+    width: "100%",
+    textAlign: "center",
+    fontFamily: Fonts.RoadRageRegular,
+    fontSize: rf(22),
   },
 });
 
