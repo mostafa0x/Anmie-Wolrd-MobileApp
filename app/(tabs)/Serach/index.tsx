@@ -65,12 +65,7 @@ export default function Serach() {
               backgroundColor:
                 statusValue == btn.value ? Colors.iconColor : "rgba(0,0,0,0.2)",
             },
-            labelStyle: {
-              color: Colors.textColor,
-              fontFamily: Fonts.RoadRageRegular,
-              fontSize: rf(22),
-              lineHeight: rh(22),
-            },
+            labelStyle: styles.lableFillter,
             value: btn.value,
             label: btn.label.charAt(0).toLocaleUpperCase() + btn.label.slice(1),
           }))}
@@ -162,5 +157,11 @@ const styles = StyleSheet.create({
     padding: rw(10),
     borderRadius: rw(8),
     alignItems: "center",
+  },
+  lableFillter: {
+    color: Colors.textColor,
+    fontFamily: Fonts.RoadRageRegular,
+    fontSize: rf(22),
+    lineHeight: rh(22),
   },
 });

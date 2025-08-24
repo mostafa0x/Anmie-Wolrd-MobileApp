@@ -39,7 +39,7 @@ function getStyles(calledFrom: fromType, type: number) {
       borderTopEndRadius: calledFrom == "any" ? rw(0) : rw(radius),
       overflow: "hidden",
       borderWidth: 0.3,
-      borderColor: "rgba(255,255,255,0.7)",
+      borderColor: "#fff",
       borderBottomWidth: rw(2),
       borderTopWidth: (type = 0 ? 0.3 : 0),
     },

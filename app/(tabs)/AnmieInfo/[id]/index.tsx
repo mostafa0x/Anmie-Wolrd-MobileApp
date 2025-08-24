@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: rw(19),
   },
   glassContiner: {
-    marginTop: rh(220),
+    marginTop: rh(223),
   },
   descContiner: {
     marginTop: rh(19),
