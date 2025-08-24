@@ -94,7 +94,7 @@ export default function Serach() {
 }
 
 const styles = StyleSheet.create({
-  container: { marginTop: rh(5) },
+  container: { marginTop: rh(0) },
   textContainer: {
     paddingHorizontal: rw(20),
   },
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     marginTop: rh(0),
   },
   fillterContainer: {
-    marginTop: rh(20),
+    marginTop: rh(10),
     paddingHorizontal: rw(20),
     gap: rh(5),
   },
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     lineHeight: rh(24),
   },
   btnContaier: {
-    marginTop: rh(2),
+    marginTop: rh(10),
     alignItems: "center",
     justifyContent: "center",
   },

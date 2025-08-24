@@ -62,7 +62,7 @@ export default function Categorys({ title, filter }: props) {
 
 const styles = StyleSheet.create({
   Categorys: {
-    marginTop: rh(32),
+    marginTop: rh(10),
   },
   CategorysItem: {
     flexDirection: "row",
