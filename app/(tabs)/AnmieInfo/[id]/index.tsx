@@ -69,7 +69,7 @@ export default function AnmieInfo({}: props) {
             />
             <View style={{ position: "absolute", top: rh(0), right: rw(0) }}>
               <TouchableOpacity>
-                <LoveBtnIcon />
+                <LoveBtnIcon isMyFav={false} />
               </TouchableOpacity>
             </View>
           </View>
