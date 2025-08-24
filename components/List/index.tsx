@@ -42,6 +42,7 @@ function ListAnmie({
         keyExtractor={(item, index) => index.toString()}
         horizontal={isHome}
         numColumns={isHome ? 1 : 3}
+        scrollEnabled={!isLoading}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{
           paddingLeft: isHome ? rw(19) : rw(13),
@@ -49,7 +50,9 @@ function ListAnmie({
           paddingBottom: isHome ? rh(10) : rh(500),
         }}
         initialScrollIndex={
-          lastAnmieIndex != null && lastAnmieIndex < data.length
+          from == "Category" &&
+          lastAnmieIndex != null &&
+          lastAnmieIndex < data.length
             ? lastAnmieIndex ?? 0
             : 0
         }

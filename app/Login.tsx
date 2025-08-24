@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     marginTop: rh(160),
   },
   signInBtn_disabled: {
-    backgroundColor: "rgba(0,0,0,0.8)",
+    backgroundColor: "rgba(0,0,0,0.6)",
     overflow: "hidden",
     borderRadius: rw(8),
     width: rw(220),

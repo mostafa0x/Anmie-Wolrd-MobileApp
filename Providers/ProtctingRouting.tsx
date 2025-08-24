@@ -1,12 +1,14 @@
 import GlobalError from "@/components/GlobalError";
 import LinearView from "@/components/LinearView";
-import SplashScreen from "@/components/SplashScreen";
+import SplashScreenFC from "@/components/SplashScreen";
 import useInit from "@/hooks/useInit";
 import { setIsLoadingApp } from "@/lib/store/AppSlice";
 import { StateType } from "@/types/store/StateType";
-import { usePathname, useRouter } from "expo-router";
+import { SplashScreen, usePathname, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
+SplashScreen.preventAutoHideAsync();
 
 export default function ProtctingRoutingProvider({
   children,
@@ -40,7 +42,7 @@ export default function ProtctingRoutingProvider({
       if (isActive) setIsMounted(true);
       dispatch(setIsLoadingApp(false));
     };
-    const delaySplash = setTimeout(init, 600);
+    const delaySplash = setTimeout(init, 2500);
     return () => {
       clearTimeout(delaySplash);
       isActive = false;
@@ -65,7 +67,7 @@ export default function ProtctingRoutingProvider({
   if (isLoadingApp) {
     return (
       <LinearView>
-        <SplashScreen />
+        <SplashScreenFC />
       </LinearView>
     );
   }

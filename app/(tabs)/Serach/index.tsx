@@ -23,6 +23,7 @@ export default function Serach() {
   const router = useRouter();
 
   function SerachByText() {
+    if (q.trim() == "") return;
     router.push({ pathname: "/SearchResults", params: { q, status: value } });
   }
   return (

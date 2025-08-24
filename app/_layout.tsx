@@ -2,11 +2,14 @@ import LinearView from "@/components/LinearView";
 import { store } from "@/lib/store";
 import AllProviders from "@/Providers/Providers";
 import { useFonts } from "expo-font";
-import { Slot } from "expo-router";
+import { Slot, SplashScreen } from "expo-router";
 import { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-reanimated";
 import { Provider } from "react-redux";
+
+SplashScreen.preventAutoHideAsync();
+
 export default function RootLayout() {
   const [loaded] = useFonts({
     RoadRageRegular: require("../assets/fonts/RoadRage-Regular.ttf"),
