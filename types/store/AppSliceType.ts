@@ -6,7 +6,7 @@ export interface AppSliceType {
   isLoadingApp: boolean;
 }
 
-interface genresType {
+export interface genresType {
   mal_id: number;
   type: string;
   name: string;
