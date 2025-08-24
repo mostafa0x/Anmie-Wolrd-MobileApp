@@ -69,7 +69,7 @@ export default function AnmieInfo({}: props) {
                 transition={100}
                 onLoadStart={() => setisLoadingImg(true)}
                 onLoadEnd={() => setisLoadingImg(false)}
-                source={{ uri: item?.images?.webp?.image_url ?? "" }}
+                source={{ uri: item?.images?.webp?.large_image_url ?? "" }}
               />
             </Skeleton>
             <View style={{ position: "absolute", top: rh(0), right: rw(0) }}>
@@ -87,7 +87,9 @@ export default function AnmieInfo({}: props) {
             <View>
               <Text style={styles.Synopsis}>Synopsis</Text>
             </View>
-            <Text style={styles.decTxt}>{item?.synopsis ?? ""}</Text>
+            <Text style={styles.decTxt}>
+              {item?.synopsis ?? "There is no Synopsis yet."}
+            </Text>
           </View>
           <View style={styles.playerContinaer}>
             <VideoPlayer ref={playerRef} item={item} />

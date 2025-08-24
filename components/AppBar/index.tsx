@@ -8,9 +8,11 @@ import ArrowLeftIcon from "../Icons/ArrowLeftIcon";
 export default function AppBar({
   title = "empty",
   statusType,
+  genresTitle,
 }: {
   title: string;
   statusType?: string;
+  genresTitle?: string;
 }) {
   const router = useRouter();
   const firstTitle = title.split(" ").splice(0, 1).join(" ");
@@ -42,6 +44,10 @@ export default function AppBar({
           <Text style={styles.sectitle}>{restTitle}</Text>
         </Text>
         <Text style={styles.statusType}>{statusType}</Text>
+        {statusType && genresTitle && (
+          <Text style={styles.statusType}> + </Text>
+        )}
+        <Text style={styles.statusType}>{genresTitle}</Text>
       </View>
     </View>
   );

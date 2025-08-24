@@ -15,7 +15,7 @@ function ListAnmie({
   hasNextPage,
   fetchNextPage,
 }: {
-  data: AnmieType[];
+  data: AnmieType[] | undefined;
   isLoading: boolean;
   from: fromType;
   hasNextPage?: boolean;

@@ -3,11 +3,12 @@ import { Colors, Fonts } from "@/constants/Colors";
 import { rf, rh, rw } from "@/utils/dimensions";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Button, Searchbar, SegmentedButtons } from "react-native-paper";
 
 export default function Serach() {
-  const [value, setValue] = useState("");
+  const [statusValue, setStatusValue] = useState("");
+  const [genresValue, setGenresValue] = useState("");
   const [q, setq] = useState("");
   const btns = [
     {
@@ -20,11 +21,27 @@ export default function Serach() {
     },
     { value: "upcoming", label: "upcoming" },
   ];
+  const genresbtns = [
+    {
+      value: "1_Action",
+      label: "Action",
+    },
+    {
+      value: "2_Adventure",
+      label: "Adventure",
+    },
+    { value: "8_Drama", label: "Drama" },
+    { value: "14_Horror", label: "Horror" },
+    { value: "22_Romance", label: "Romance" },
+  ];
   const router = useRouter();
 
   function SerachByText() {
     if (q.trim() == "") return;
-    router.push({ pathname: "/SearchResults", params: { q, status: value } });
+    router.push({
+      pathname: "/SearchResults",
+      params: { q, status: statusValue, genresValue },
+    });
   }
   return (
     <View style={styles.container}>
@@ -49,20 +66,56 @@ export default function Serach() {
       </View>
       <View style={styles.fillterContainer}>
         <SegmentedButtons
-          value={value}
-          onValueChange={(v) => (v == value ? setValue("") : setValue(v))}
+          value={statusValue}
+          onValueChange={(v) =>
+            v == statusValue ? setStatusValue("") : setStatusValue(v)
+          }
           buttons={btns.map((btn) => ({
             style: {
               backgroundColor:
-                value == btn.value ? Colors.iconColor : "rgba(0,0,0,0.2)",
+                statusValue == btn.value ? Colors.iconColor : "rgba(0,0,0,0.2)",
             },
             labelStyle: {
               color: Colors.textColor,
+              fontFamily: Fonts.RoadRageRegular,
+              fontSize: rf(22),
+              lineHeight: rh(22),
             },
             value: btn.value,
             label: btn.label.charAt(0).toLocaleUpperCase() + btn.label.slice(1),
           }))}
         />
+        <View style={styles.genresContainer}>
+          {genresbtns.map((btn, index) => (
+            <TouchableOpacity
+              key={index}
+              style={[
+                styles.genresBtn,
+                {
+                  backgroundColor:
+                    genresValue == btn.value
+                      ? Colors.iconColor
+                      : "rgba(0,0,0,0.2)",
+                },
+              ]}
+              onPress={() =>
+                setGenresValue(genresValue === btn.value ? "" : btn.value)
+              }
+            >
+              <Text
+                style={{
+                  color: Colors.textColor,
+                  width: "100%",
+                  textAlign: "center",
+                  fontFamily: Fonts.RoadRageRegular,
+                  fontSize: rf(22),
+                }}
+              >
+                {btn.label.charAt(0).toUpperCase() + btn.label.slice(1)}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
       </View>
       <View style={styles.Categorys}>
         <Categorys title="Popularity" filter="bypopularity" />
@@ -83,7 +136,7 @@ export default function Serach() {
 }
 
 const styles = StyleSheet.create({
-  container: { marginTop: rh(10) },
+  container: { marginTop: rh(5) },
   textContainer: {
     paddingHorizontal: rw(20),
   },
@@ -110,14 +163,15 @@ const styles = StyleSheet.create({
   serachContainer: {
     paddingHorizontal: rw(20),
 
-    marginTop: rh(20),
+    marginTop: rh(10),
   },
   Categorys: {
-    marginTop: rh(50),
+    marginTop: rh(0),
   },
   fillterContainer: {
-    marginTop: rh(30),
+    marginTop: rh(20),
     paddingHorizontal: rw(20),
+    gap: rh(10),
   },
   btn: {
     width: rw(200),
@@ -130,8 +184,20 @@ const styles = StyleSheet.create({
     lineHeight: rh(24),
   },
   btnContaier: {
-    marginTop: rh(60),
+    marginTop: rh(2),
     alignItems: "center",
     justifyContent: "center",
+  },
+  genresContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+  },
+  genresBtn: {
+    width: "30%",
+    marginVertical: rh(3),
+    padding: rw(10),
+    borderRadius: rw(8),
+    alignItems: "center",
   },
 });
