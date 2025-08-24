@@ -11,6 +11,7 @@ export interface CharactersType {
     name: string;
   };
   role: string;
+  favorites: number;
   voice_actors: [
     {
       person: {
