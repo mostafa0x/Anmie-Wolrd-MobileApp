@@ -25,7 +25,7 @@ function Contant_Info({ item }: { item: AnmieType | null }) {
             episodes : {item?.episodes ?? "unknow"}
           </Text>
           <Text style={styles.titles}>
-            From : {item?.aired?.from?.split("T")[0] ?? ""}
+            From : {item?.aired?.from?.split("T")[0] ?? "unknow"}
           </Text>
           <Text style={styles.titles}>
             To : {item?.aired?.to?.split("T")[0] ?? "unknow"}

@@ -4,15 +4,13 @@ import { Colors, Fonts } from "@/constants/Colors";
 import { CharactersType } from "@/types/CharactersType";
 import { rf, rh, rw } from "@/utils/dimensions";
 import { Image } from "expo-image";
-import { Skeleton } from "moti/skeleton";
-import React, { memo, useRef, useState } from "react";
-import {
-  Animated,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import React, { memo, useCallback, useState } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from "react-native-reanimated";
 
 function CharactersItem({
   character,
@@ -22,43 +20,43 @@ function CharactersItem({
   isLoading: boolean;
 }) {
   const [isCharacter, setIsCharacter] = useState(true);
-  const flipAnim = useRef(new Animated.Value(0)).current;
+  const flip = useSharedValue(0);
 
-  const frontInterpolate = flipAnim.interpolate({
-    inputRange: [0, 180],
-    outputRange: ["0deg", "180deg"],
-  });
+  const frontStyle = useAnimatedStyle(() => ({
+    transform: [{ rotateY: `${flip.value}deg` }],
+    backfaceVisibility: "hidden",
+    position: "absolute",
+  }));
 
-  const backInterpolate = flipAnim.interpolate({
-    inputRange: [0, 180],
-    outputRange: ["180deg", "360deg"],
-  });
+  const backStyle = useAnimatedStyle(() => ({
+    transform: [{ rotateY: `${flip.value + 180}deg` }],
+    backfaceVisibility: "hidden",
+  }));
 
-  const flipCard = () => {
-    Animated.spring(flipAnim, {
-      toValue: isCharacter ? 180 : 0,
-      useNativeDriver: true,
-      friction: 8,
-      tension: 10,
-    }).start(() => {
-      setIsCharacter(!isCharacter);
+  const flipCard = useCallback(() => {
+    flip.value = withSpring(flip.value === 0 ? 180 : 0, {
+      damping: 10,
+      stiffness: 80,
     });
-  };
+  }, [flip]);
+
+  // const flipCard = () => {
+  //   Animated.spring(flipAnim, {
+  //     toValue: isCharacter ? 180 : 0,
+  //     useNativeDriver: true,
+  //     friction: 8,
+  //     tension: 10,
+  //   }).start(() => {
+  //     setIsCharacter(!isCharacter);
+  //   });
+  // };
 
   return (
-    <TouchableOpacity onPress={flipCard} style={styles.container}>
+    <Pressable onPress={flipCard} style={styles.container}>
       <View>
-        <Animated.View
-          style={[
-            styles.card,
-            {
-              transform: [{ rotateY: frontInterpolate }],
-              position: "absolute",
-              backfaceVisibility: "hidden",
-            },
-          ]}
-        >
-          <GlassView calledFrom={"Home"}>
+        {/* Front */}
+        <Animated.View style={[styles.card, frontStyle]}>
+          <GlassView calledFrom="Home">
             {!isLoading && (
               <View style={styles.roleLoveContainer}>
                 <Text style={styles.roleTitle}>
@@ -72,13 +70,10 @@ function CharactersItem({
                 </View>
               </View>
             )}
-            <Skeleton show={isLoading}>
-              <Image
-                contentFit="fill"
-                style={styles.img}
-                source={character?.character?.images?.jpg?.image_url ?? ""}
-              />
-            </Skeleton>
+            <Image
+              style={styles.img}
+              source={character?.character?.images?.jpg?.image_url ?? ""}
+            />
           </GlassView>
           {!isLoading && (
             <Text
@@ -92,26 +87,16 @@ function CharactersItem({
           )}
         </Animated.View>
 
-        <Animated.View
-          style={[
-            styles.card,
-            {
-              transform: [{ rotateY: backInterpolate }],
-              backfaceVisibility: "hidden",
-            },
-          ]}
-        >
-          <GlassView calledFrom={"Home"}>
-            <Skeleton show={isLoading}>
-              <Image
-                contentFit="fill"
-                style={styles.img}
-                source={
-                  character?.voice_actors?.[0]?.person?.images?.jpg
-                    ?.image_url ?? ""
-                }
-              />
-            </Skeleton>
+        {/* Back */}
+        <Animated.View style={[styles.card, backStyle]}>
+          <GlassView calledFrom="Home">
+            <Image
+              style={styles.img}
+              source={
+                character?.voice_actors?.[0]?.person?.images?.jpg?.image_url ??
+                ""
+              }
+            />
           </GlassView>
           {!isLoading && (
             <Text
@@ -120,17 +105,20 @@ function CharactersItem({
               minimumFontScale={0.5}
               style={styles.title}
             >
-              {character?.voice_actors?.[0]?.person?.name ?? "unknow"}
+              {character?.voice_actors[0]?.person?.name ?? "unknow"}
             </Text>
           )}
         </Animated.View>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { height: "auto", gap: rh(5), alignItems: "center" },
+  container: {
+    gap: rh(5),
+    alignItems: "center",
+  },
   card: {
     width: rw(133),
     alignItems: "center",

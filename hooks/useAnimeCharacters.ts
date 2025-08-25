@@ -4,8 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 async function FeatchData(anmieId: number) {
   try {
     const res = await axiosClient.get(`/anime/${anmieId}/characters`);
-    console.log(res.data);
-
     return res.data.data;
   } catch (err: any) {
     throw err;
