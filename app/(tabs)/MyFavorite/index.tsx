@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 export default function MyFavorite() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <View>
       <AppBar title={"My Favorite"} />

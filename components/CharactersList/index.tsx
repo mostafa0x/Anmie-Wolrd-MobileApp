@@ -4,7 +4,7 @@ import { CharactersType } from "@/types/CharactersType";
 import { AnmieType } from "@/types/store/AppSliceType";
 import { rf, rh, rw } from "@/utils/dimensions";
 import { FlashList } from "@shopify/flash-list";
-import React, { memo, useEffect } from "react";
+import React, { memo, useCallback, useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import CharactersItem from "./item/index";
 
@@ -17,6 +17,21 @@ function CharactersList({ item }: { item: AnmieType }) {
 
     return () => {};
   }, [error]);
+
+  const renderItem = useCallback(
+    ({ item }: { item: CharactersType }) => (
+      <CharactersItem character={item} isLoading={isError ? true : isLoading} />
+    ),
+    [isError, isLoading]
+  );
+  const footerItem = useCallback(
+    () => (
+      <View style={styles.emptyTitleContainer}>
+        <Text style={styles.emptyTitle}>Unknown until this moment</Text>
+      </View>
+    ),
+    []
+  );
 
   return (
     <View style={styles.container}>
@@ -32,17 +47,8 @@ function CharactersList({ item }: { item: AnmieType }) {
         }
         estimatedItemSize={133}
         ItemSeparatorComponent={() => <View style={styles.spaceItems}></View>}
-        ListEmptyComponent={() => (
-          <View style={styles.emptyTitleContainer}>
-            <Text style={styles.emptyTitle}>Unknown until this moment</Text>
-          </View>
-        )}
-        renderItem={({ item }: { item: CharactersType }) => (
-          <CharactersItem
-            character={item}
-            isLoading={isError ? true : isLoading}
-          />
-        )}
+        ListEmptyComponent={footerItem}
+        renderItem={renderItem}
       />
     </View>
   );

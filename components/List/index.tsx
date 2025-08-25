@@ -2,7 +2,7 @@ import { Colors, Fonts } from "@/constants/Colors";
 import { AnmieType } from "@/types/store/AppSliceType";
 import { rf, rh, rw } from "@/utils/dimensions";
 import { FlashList } from "@shopify/flash-list";
-import React, { memo, useRef } from "react";
+import React, { memo, useCallback, useRef } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import ListItem from "./item/index";
@@ -22,17 +22,37 @@ function ListAnmie({
   fetchNextPage?: any;
 }) {
   const isHome = from == "Home";
-  const styles = getStyles(isHome);
   const listRef = useRef<FlashList<AnmieType>>(null);
+
+  const renderItem = useCallback(
+    ({ item }: { item: AnmieType }) => (
+      <ListItem item={item} isLoading={isLoading} from={from} />
+    ),
+    [isLoading, from]
+  );
+
+  const renderFooter = useCallback(() => {
+    if (isHome || !hasNextPage) return null;
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size={rf(50)} color={Colors.iconColor} />
+      </View>
+    );
+  }, [isHome, hasNextPage, styles.loadingContainer]);
+
+  const handleEndReached = useCallback(() => {
+    if (hasNextPage && !isHome) {
+      fetchNextPage();
+    }
+  }, [hasNextPage, isHome, fetchNextPage]);
+
   return (
-    <View style={styles.list}>
+    <View style={[styles.list, !isHome && styles.list_unHome]}>
       <FlashList
         ref={listRef}
         data={isLoading ? Array(4) : data ?? []}
         estimatedItemSize={isHome ? 133 : 203}
-        keyExtractor={(item, index) =>
-          item?.mal_id ? item?.mal_id.toString() : index.toString()
-        }
+        keyExtractor={(item, index) => index.toString()}
         horizontal={isHome}
         numColumns={isHome ? 1 : 3}
         scrollEnabled={!isLoading}
@@ -61,54 +81,39 @@ function ListAnmie({
             <Text style={styles.txtEmpty}>Empty List</Text>
           </View>
         )}
-        ListFooterComponent={() =>
-          !isHome &&
-          hasNextPage && (
-            <View style={styles.loadingContainer}>
-              <ActivityIndicator size={rf(50)} color={Colors.iconColor} />
-            </View>
-          )
-        }
-        onEndReached={() => {
-          if (hasNextPage && !isHome) {
-            fetchNextPage();
-          }
-        }}
+        ListFooterComponent={renderFooter}
+        onEndReached={handleEndReached}
         onEndReachedThreshold={0.8}
-        renderItem={({ item, index }: { item: AnmieType; index: number }) => (
-          <ListItem
-            item={item}
-            index={index}
-            isLoading={isLoading}
-            from={from}
-          />
-        )}
+        renderItem={renderItem}
       />
     </View>
   );
 }
 
-function getStyles(isHome: boolean) {
-  return StyleSheet.create({
-    list: {
-      height: isHome ? "auto" : "100%",
-      width: "auto",
-      marginTop: rh(9),
-    },
-    txtEmpty: {
-      fontFamily: Fonts.RoadRageRegular,
-      color: Colors.textColor,
-      fontSize: rf(20),
-    },
-    emptyContainer: {
-      marginTop: rh(20),
-    },
-    loadingContainer: {
-      alignItems: "center",
-      justifyContent: "center",
-      marginTop: rh(20),
-    },
-  });
-}
+const styles = StyleSheet.create({
+  list: {
+    height: "auto",
+    width: "auto",
+    marginTop: rh(9),
+  },
+  list_unHome: {
+    height: "100%",
+    width: "auto",
+    marginTop: rh(9),
+  },
+  txtEmpty: {
+    fontFamily: Fonts.RoadRageRegular,
+    color: Colors.textColor,
+    fontSize: rf(28),
+  },
+  emptyContainer: {
+    marginTop: rh(20),
+  },
+  loadingContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: rh(20),
+  },
+});
 
 export default memo(ListAnmie);

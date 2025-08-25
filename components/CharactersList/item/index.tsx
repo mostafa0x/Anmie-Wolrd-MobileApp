@@ -38,23 +38,12 @@ function CharactersItem({
       damping: 10,
       stiffness: 80,
     });
+    setIsCharacter((pev) => (pev ? false : true));
   }, [flip]);
-
-  // const flipCard = () => {
-  //   Animated.spring(flipAnim, {
-  //     toValue: isCharacter ? 180 : 0,
-  //     useNativeDriver: true,
-  //     friction: 8,
-  //     tension: 10,
-  //   }).start(() => {
-  //     setIsCharacter(!isCharacter);
-  //   });
-  // };
 
   return (
     <Pressable onPress={flipCard} style={styles.container}>
       <View>
-        {/* Front */}
         <Animated.View style={[styles.card, frontStyle]}>
           <GlassView calledFrom="Home">
             {!isLoading && (
@@ -87,7 +76,6 @@ function CharactersItem({
           )}
         </Animated.View>
 
-        {/* Back */}
         <Animated.View style={[styles.card, backStyle]}>
           <GlassView calledFrom="Home">
             <Image
@@ -167,4 +155,9 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo(CharactersItem);
+export default memo(CharactersItem, (prev, next) => {
+  return (
+    prev.isLoading === next.isLoading &&
+    prev.character?.character.mal_id === next.character?.character.mal_id
+  );
+});

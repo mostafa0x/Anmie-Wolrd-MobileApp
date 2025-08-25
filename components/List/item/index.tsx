@@ -2,14 +2,13 @@ import GlassView from "@/components/GlassView";
 import LoveIcon from "@/components/Icons/LoveIcon";
 import StarIcon from "@/components/Icons/StarIcon";
 import { Colors, Fonts } from "@/constants/Colors";
-import { setLastAnmieIndex } from "@/lib/store/AppSlice";
 import { AnmieType } from "@/types/store/AppSliceType";
 import { rf, rh, rw } from "@/utils/dimensions";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import { Skeleton } from "moti/skeleton";
 import React, { memo } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useDispatch } from "react-redux";
 import { fromType } from "..";
 
@@ -17,22 +16,19 @@ function ListItem({
   item,
   isLoading,
   from,
-  index,
 }: {
   item: AnmieType | null;
   isLoading: boolean;
   from: fromType;
-  index: number;
 }) {
   const disPatch = useDispatch();
   const router = useRouter();
   const isHome = from == "Home";
 
   return (
-    <TouchableOpacity
+    <Pressable
       onPress={() => {
         if (!isLoading) {
-          disPatch(setLastAnmieIndex(index));
           router.push({
             pathname: `/AnmieInfo/${item?.mal_id}` as any,
             params: {
@@ -54,10 +50,11 @@ function ListItem({
           <Image
             style={[styles.img, isHome && styles.imgHome]}
             source={item?.images?.webp?.large_image_url}
+            cachePolicy="memory-disk"
           />
         )}
         {isLoading ? (
-          <View style={{ marginTop: rh(20), paddingHorizontal: rw(10) }}>
+          <View style={styles.skeltionTxt}>
             <Skeleton
               width={isHome ? rw(110) : rw(90)}
               height={rh(20)}
@@ -87,7 +84,7 @@ function ListItem({
           </View>
         )}
       </GlassView>
-    </TouchableOpacity>
+    </Pressable>
   );
 }
 
@@ -125,6 +122,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: rw(3),
   },
+  skeltionTxt: { marginTop: rh(20), paddingHorizontal: rw(10) },
 });
 
-export default memo(ListItem);
+export default memo(ListItem, (prev, next) => {
+  return (
+    prev.isLoading === next.isLoading &&
+    prev.from === next.from &&
+    prev.item?.mal_id === next.item?.mal_id
+  );
+});
