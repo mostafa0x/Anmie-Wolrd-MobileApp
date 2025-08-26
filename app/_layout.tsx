@@ -17,6 +17,7 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (loaded) {
+      SplashScreen.hide();
     }
   }, [loaded]);
 

@@ -1,6 +1,4 @@
 import GlassView from "@/components/GlassView";
-import LoveIcon from "@/components/Icons/LoveIcon";
-import StarIcon from "@/components/Icons/StarIcon";
 import { Colors, Fonts } from "@/constants/Colors";
 import { AnmieType } from "@/types/store/AppSliceType";
 import { rf, rh, rw } from "@/utils/dimensions";
@@ -8,9 +6,9 @@ import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import { Skeleton } from "moti/skeleton";
 import React, { memo } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
-import { useDispatch } from "react-redux";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { fromType } from "..";
+import Info_Item from "./info";
 
 function ListItem({
   item,
@@ -21,12 +19,11 @@ function ListItem({
   isLoading: boolean;
   from: fromType;
 }) {
-  const disPatch = useDispatch();
   const router = useRouter();
   const isHome = from == "Home";
 
   return (
-    <Pressable
+    <TouchableOpacity
       onPress={() => {
         if (!isLoading) {
           router.push({
@@ -71,20 +68,9 @@ function ListItem({
           </Text>
         )}
 
-        {isLoading ? null : (
-          <View style={styles.info}>
-            <View style={styles.infoMin}>
-              <Text style={styles.infoTxt}>{item?.favorites ?? "unknow"}</Text>
-              <LoveIcon width={rw(16)} height={rh(16)} />
-            </View>
-            <View style={styles.infoMin}>
-              <Text style={styles.infoTxt}>{item?.score ?? "unknow"}</Text>
-              <StarIcon width={rw(20)} height={rh(20)} />
-            </View>
-          </View>
-        )}
+        {isLoading ? null : <Info_Item item={item} />}
       </GlassView>
-    </Pressable>
+    </TouchableOpacity>
   );
 }
 
@@ -107,21 +93,7 @@ const styles = StyleSheet.create({
   titleHome: {
     width: rw(130),
   },
-  info: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingHorizontal: rw(12),
-  },
-  infoTxt: {
-    fontFamily: Fonts.RoadRageRegular,
-    fontSize: rf(16),
-    color: Colors.textColor,
-  },
-  infoMin: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: rw(3),
-  },
+
   skeltionTxt: { marginTop: rh(20), paddingHorizontal: rw(10) },
 });
 

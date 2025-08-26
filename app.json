@@ -4,7 +4,7 @@
     "slug": "anmie-world",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/title.png",
     "scheme": "anmieworld",
     "owner": "mostafa_ahmed",
     "userInterfaceStyle": "automatic",
@@ -15,7 +15,7 @@
     "android": {
       "package": "com.akmcode.anmieworld",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/title.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true
@@ -33,8 +33,8 @@
         "expo-splash-screen",
         {
           "backgroundColor": "#232323",
-          "image": "./assets/splash-icon.png",
-          "imageWidth": 200
+          "image": "./assets/images/SplashImg.png",
+          "imageWidth": 512
         }
       ]
     ],

@@ -36,18 +36,28 @@ export default function AppBar({
         <Text
           numberOfLines={1}
           adjustsFontSizeToFit
-          minimumFontScale={0.5}
+          minimumFontScale={0.7}
           ellipsizeMode="tail"
           style={styles.title}
         >
           <Text style={styles.title}>{firstTitle} </Text>
           <Text style={styles.sectitle}>{restTitle}</Text>
+          {statusType ||
+            (genresTitle && (
+              <Text
+                adjustsFontSizeToFit
+                minimumFontScale={0.8}
+                style={styles.fillterTitle}
+                numberOfLines={1}
+              >
+                <Text style={styles.statusType}>{statusType}</Text>
+                {statusType && genresTitle && (
+                  <Text style={styles.statusType}> + </Text>
+                )}
+                <Text style={styles.statusType}>{genresTitle}</Text>
+              </Text>
+            ))}
         </Text>
-        <Text style={styles.statusType}>{statusType}</Text>
-        {statusType && genresTitle && (
-          <Text style={styles.statusType}> + </Text>
-        )}
-        <Text style={styles.statusType}>{genresTitle}</Text>
       </View>
     </View>
   );
@@ -74,7 +84,16 @@ const styles = StyleSheet.create({
   statusType: {
     fontFamily: Fonts.RoadRageRegular,
     fontSize: rf(24),
-    color: "yellow",
+    color: "#dbce13",
   },
-  titleContiner: { flexDirection: "row", marginBottom: rh(0), flexShrink: 1 },
+  titleContiner: {
+    flexDirection: "row",
+    marginBottom: rh(0),
+    flexShrink: 1,
+  },
+  fillterTitle: {
+    flexDirection: "row",
+    marginBottom: rh(0),
+    flexShrink: 1,
+  },
 });

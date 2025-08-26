@@ -49,6 +49,7 @@ export default function Serach() {
           value={q}
           onChangeText={setq}
           placeholderTextColor={"rgba(0,0,0,0.5)"}
+          style={{ backgroundColor: "white" }}
           placeholder="Search"
           onSubmitEditing={SerachByText}
           onIconPress={SerachByText}
