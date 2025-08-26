@@ -1,5 +1,4 @@
 import GlassView from "@/components/GlassView";
-import LoveIcon from "@/components/Icons/LoveIcon";
 import { Colors, Fonts } from "@/constants/Colors";
 import { CharactersType } from "@/types/CharactersType";
 import { rf, rh, rw } from "@/utils/dimensions";
@@ -11,6 +10,7 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated";
+import Info_Char from "./Info";
 
 function CharactersItem({
   character,
@@ -45,25 +45,7 @@ function CharactersItem({
     <Pressable onPress={flipCard} style={styles.container}>
       <View>
         <Animated.View style={[styles.card, frontStyle]}>
-          <GlassView calledFrom="Home">
-            {!isLoading && (
-              <View style={styles.roleLoveContainer}>
-                <Text style={styles.roleTitle}>
-                  {character?.role ?? "unknow"}
-                </Text>
-                <View style={styles.loveCountContainer}>
-                  <Text style={styles.loveCount}>
-                    {character?.favorites ?? "unknow"}
-                  </Text>
-                  <LoveIcon />
-                </View>
-              </View>
-            )}
-            <Image
-              style={styles.img}
-              source={character?.character?.images?.jpg?.image_url ?? ""}
-            />
-          </GlassView>
+          <Info_Char isLoading={isLoading} character={character} />
           {!isLoading && (
             <Text
               numberOfLines={1}
