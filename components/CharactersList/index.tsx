@@ -75,4 +75,6 @@ const styles = StyleSheet.create({
   spaceItems: { width: rw(20) },
 });
 
-export default memo(CharactersList);
+export default memo(CharactersList, (prev, next) => {
+  return prev.item.mal_id === next.item.mal_id;
+});

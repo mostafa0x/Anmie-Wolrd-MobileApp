@@ -1,17 +1,19 @@
+import handleAddFavourtie from "@/services/handleAddFavourtie";
 import { AnmieType } from "@/types/store/AppSliceType";
+import { StateType } from "@/types/store/StateType";
 import { rh, rw } from "@/utils/dimensions";
 import { Image } from "expo-image";
 import { Skeleton } from "moti/skeleton";
-import React, { memo, useRef, useState } from "react";
+import React, { memo, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { YoutubeIframeRef } from "react-native-youtube-iframe";
+import { useSelector } from "react-redux";
 import ContantInfo from "../ContantInfo";
 import GlassView from "../GlassView";
 import LoveBtnIcon from "../Icons/LoveBtnIcon";
 
 function AnmieCard({ item }: { item: AnmieType | null }) {
-  const playerRef = useRef<YoutubeIframeRef>(null);
   const [isLoadingImg, setisLoadingImg] = useState(true);
+  const { userToken } = useSelector((state: StateType) => state.UserReducer);
   return (
     <View>
       <View style={styles.imgContanier}>
@@ -26,7 +28,9 @@ function AnmieCard({ item }: { item: AnmieType | null }) {
           />
         </Skeleton>
         <View style={{ position: "absolute", top: rh(0), right: rw(0) }}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => handleAddFavourtie(item?.mal_id, userToken)}
+          >
             <LoveBtnIcon isMyFav={false} />
           </TouchableOpacity>
         </View>
@@ -62,4 +66,6 @@ const styles = StyleSheet.create({
   titleContiner: { flexDirection: "row", marginBottom: rh(0), flexShrink: 1 },
 });
 
-export default memo(AnmieCard);
+export default memo(AnmieCard, (prev, next) => {
+  return prev.item?.mal_id === next.item?.mal_id;
+});

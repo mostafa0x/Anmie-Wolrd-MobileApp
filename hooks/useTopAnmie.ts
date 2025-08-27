@@ -2,7 +2,7 @@ import { axiosClient } from "@/lib/api/axiosClient";
 import { useQuery } from "@tanstack/react-query";
 
 async function fetchData(url: string, filter: string) {
-  const limitPerPage = 25;
+  const limitPerPage = 10;
 
   const res = await axiosClient.get(
     `${url}?limit=${limitPerPage}&filter=${filter}&sfw=true`
