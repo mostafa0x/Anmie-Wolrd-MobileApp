@@ -1,50 +1,60 @@
-# Welcome to your Expo app 👋
+# 🌸 Anime World App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+<p align="center">
+  <img src="https://img.shields.io/badge/React%20Native-0.79-blue?style=for-the-badge&logo=react" />
+  <img src="https://img.shields.io/badge/Expo-53-1B1F23?style=for-the-badge&logo=expo" />
+  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" />
+</p>
 
-## Get started
+> **Anime World** is your gateway to the anime universe!  
+Browse, search, and explore your favorite anime series, characters, and trailers – all in a **smooth, modern, and responsive app**.  
 
-1. Install dependencies
+---
 
+## ✨ Features
+
+- 🏠 **Home Page** – Discover trending and popular anime series.  
+- 🔎 **Search by Name** – Find anime instantly with a powerful search bar.  
+- 🎯 **Search by Type** – Browse by genres like *Action*, *Romance*, *Comedy*, *Isekai*, and more.  
+- 📖 **Anime Details** – View synopsis, episodes, ratings, and recommendations.  
+- ▶️ **Trailer Player** – Watch trailers using **YouTube Iframe** without leaving the app.  
+- 💾 **Save Favorites** – Mark your favorite anime and access them anytime.  
+- 🌓 **Beautiful UI** – Smooth animations, gradients, and a fully responsive layout.  
+
+---
+
+## 📸 Screenshots
+
+| 🏠 Home | 🔎 Search | 🎯 Search by Type | 📖 Anime Info |
+|--------|-----------|------------------|-------------|
+| ![Home](./assets/screenshots/home.jpg) | ![Search](./assets/screenshots/search.jpg) | ![Search By Type](./assets/screenshots/searchbytype.jpg) | ![Anime Info](./assets/screenshots/animeinfo.jpg) |
+
+---
+
+## 🚀 Tech Stack
+
+| Tool | Purpose |
+|------|---------|
+| ⚛️ **React Native 0.79** | Cross-platform mobile app |
+| 🛠 **Expo 53** | Development & build tooling |
+| 🧭 **Expo Router** | Navigation between screens |
+| 🔐 **Expo Auth Session** + **Google Sign-In** | Secure login/authentication |
+| 🗂 **Redux Toolkit** + **React Redux** | Global state management |
+| 🔄 **React Query** | Data fetching, caching & synchronization |
+| 🌐 **Axios** | API requests |
+| 🖼 **React Native Paper** | Modern UI components |
+| 🌀 **Moti** + **Reanimated 3** | Smooth animations |
+| 🎠 **Reanimated Carousel** | Animated anime sliders |
+| 🎥 **React Native YouTube Iframe** | Embedded trailers |
+| 🌍 **React Native WebView** | In-app browser for extra content |
+| 📏 **Responsive Dimensions & Fontsize** | Consistent design across all screens |
+| ⚡ **FlashList** | High-performance list rendering |
+| ✨ **Expo Blur & Linear Gradient** | Beautiful UI effects |
+
+---
+
+## 📦 Installation
+
+1. **Clone the repository**
    ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+   git clone https://github.com/yourusername/anmie-world.git
