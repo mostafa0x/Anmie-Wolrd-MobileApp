@@ -27,7 +27,7 @@ Browse, search, and explore your favorite anime series, characters, and trailers
 
 | 🏠 Home | 🔎 Search | 🎯 Search by Type | 📖 Anime Info |
 |--------|-----------|------------------|-------------|
-| ![Home](./assets/screenshots/home.jpg) | ![Search](./assets/screenshots/serach.jpg) | ![Search By Type](./assets/screenshots/serachbyType.jpg) | ![Anime Info](./assets/screenshots/anmie info.jpg) |
+| ![Home](./assets/screenshots/home.jpg) | ![Search](./assets/screenshots/serach.jpg) | ![Search By Type](./assets/screenshots/serachbyType.jpg) | ![Anime Info](./assets/screenshots/anmieinfo.jpg) |
 
 ---
 
@@ -57,4 +57,5 @@ Browse, search, and explore your favorite anime series, characters, and trailers
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/anmie-world.git
+   git clone https://github.com/yourusername/Anmie-Wolrd-MobileApp.git
+   
