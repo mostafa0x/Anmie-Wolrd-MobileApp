@@ -27,7 +27,7 @@ Browse, search, and explore your favorite anime series, characters, and trailers
 
 | 🏠 Home | 🔎 Search | 🎯 Search by Type | 📖 Anime Info |
 |--------|-----------|------------------|-------------|
-| ![Home](./assets/screenshots/home.jpg) | ![Search](./assets/screenshots/search.jpg) | ![Search By Type](./assets/screenshots/searchbytype.jpg) | ![Anime Info](./assets/screenshots/animeinfo.jpg) |
+| ![Home](./assets/screenshots/home.jpg) | ![Search](./assets/screenshots/serach.jpg) | ![Search By Type](./assets/screenshots/serachbyType.jpg) | ![Anime Info](./assets/screenshots/anmie info.jpg) |
 
 ---
 
